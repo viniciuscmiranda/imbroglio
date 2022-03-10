@@ -4,17 +4,18 @@ import React from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import {
+  BenchContainer,
+  BenchLettersContainer,
   GameContainer,
   GameTitle,
   LetterContainer,
-  LettersContainer,
   RowContainer,
   RowsContainer,
-  UnusedContainer,
 } from './styles';
 
 export const Game: React.FC = () => {
-  const { rows, letters, correctRows, getOriginalRow, dropLetter } = useGame();
+  const { rows, letters, correctRows, puzzleIndex, getSpecialCharactersRow, dropLetter } =
+    useGame();
 
   function onDragEnd(result: DropResult) {
     if (!result.destination) return;
@@ -65,13 +66,15 @@ export const Game: React.FC = () => {
 
   return (
     <GameContainer>
-      <GameTitle>imbroglio</GameTitle>
+      <GameTitle>
+        imbroglio<span>#{puzzleIndex}</span>
+      </GameTitle>
 
       <DragDropContext onDragEnd={onDragEnd}>
         {/* Rows */}
         <RowsContainer>
           {rows.map((row, rowIndex) => {
-            const originalRow = getOriginalRow(row, rowIndex);
+            const originalRow = getSpecialCharactersRow(row, rowIndex);
 
             return (
               <Droppable
@@ -103,8 +106,8 @@ export const Game: React.FC = () => {
           })}
         </RowsContainer>
 
-        {/* Unused */}
-        <UnusedContainer>
+        {/* Bench */}
+        <BenchContainer>
           {Array.from({ length: MAX_LETTERS / UNUSED_ROW_LENGTH }).map(
             (_row, rowIndex) => (
               <Droppable
@@ -120,7 +123,7 @@ export const Game: React.FC = () => {
                   );
 
                   return (
-                    <LettersContainer
+                    <BenchLettersContainer
                       disabled={!rowLetters.length}
                       ref={provided.innerRef}
                       {...provided.droppableProps}
@@ -143,13 +146,13 @@ export const Game: React.FC = () => {
                         </Draggable>
                       ))}
                       {provided.placeholder}
-                    </LettersContainer>
+                    </BenchLettersContainer>
                   );
                 }}
               </Droppable>
             ),
           )}
-        </UnusedContainer>
+        </BenchContainer>
       </DragDropContext>
     </GameContainer>
   );

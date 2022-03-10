@@ -1,8 +1,19 @@
 import puzzles from 'assets/data/puzzles.json';
 import words from 'assets/data/words.json';
 import { ROWS_AMOUNT } from 'constants';
-import _ from 'lodash';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
+
+type Puzzle = {
+  id: number;
+  date: string;
+  letters: string[];
+};
+
+type Word = {
+  id: number;
+  word: string;
+  normalized: string;
+};
 
 type Letter = {
   id: string;
@@ -11,7 +22,7 @@ type Letter = {
 
 type Row = Letter[];
 
-type originalRow = {
+type SpecialCharatersRow = {
   rowIndex: number;
   letters: string[];
 };
@@ -28,30 +39,56 @@ type GameContextProps = {
   rows: Row[];
   letters: Letter[];
   correctRows: number[];
-  originalRows: originalRow[];
+  specialCharactersRows: SpecialCharatersRow[];
   dropLetter: (letter: LetterType) => void;
-  getOriginalRow: (row: Row, rowIndex: number) => Row;
+  getSpecialCharactersRow: (row: Row, rowIndex: number) => Row;
+  puzzleIndex: number;
 };
 
-const puzzle =
-  // puzzles.find((p) => new Date(p.date).getDate() === new Date().getDate()) ||
-  puzzles[Math.floor(Math.random() * puzzles.length)];
+function getPuzzle(random?: boolean) {
+  let puzzleIndex = 0;
+  let puzzle: Puzzle | undefined;
 
-console.log(puzzle);
+  if (!random) {
+    puzzle = (puzzles as Puzzle[]).find((p, i) => {
+      if (new Date(p.date).getDate() === new Date().getDate()) {
+        puzzleIndex = i + 1;
+        return true;
+      }
+
+      return false;
+    });
+
+    if (puzzle) return { puzzle, puzzleIndex };
+  }
+
+  puzzleIndex = Math.floor(Math.random() * puzzles.length);
+  puzzle = (puzzles as Puzzle[])[puzzleIndex];
+
+  return { puzzle, puzzleIndex };
+}
+
+const { puzzle, puzzleIndex } = getPuzzle();
 
 const initialLetters = puzzle.letters.map((content) => ({
-  id: _.uniqueId(),
+  id: String(Math.random()),
   content,
 }));
 
 const LOCAL_ROW_KEY = 'ROWS';
+const LOCAL_WINS_KEY = 'WINS';
 
 export const GameContext = createContext({} as GameContextProps);
 
 export const GameProvider: React.FC = ({ children }) => {
   const [letters, setLetters] = useState<Letter[]>(initialLetters);
   const [correctRows, setCorrectRows] = useState<number[]>([]);
-  const [originalRows, setOriginalRows] = useState<originalRow[]>([]);
+  const [specialCharactersRows, setSpecialCharactersRows] = useState<
+    SpecialCharatersRow[]
+  >([]);
+  const [wins, setWins] = useState<number[]>(
+    JSON.parse(localStorage.getItem(LOCAL_WINS_KEY) || '[]'),
+  );
   const [rows, setRows] = useState<Row[]>(
     Array.from({ length: ROWS_AMOUNT }).map(() => []),
   );
@@ -88,17 +125,19 @@ export const GameProvider: React.FC = ({ children }) => {
     [rows, letters],
   );
 
-  const getOriginalRow = useCallback(
+  const getSpecialCharactersRow = useCallback(
     (row: Row, rowIndex: number) => {
-      const originalRow = originalRows.find((item) => item.rowIndex === rowIndex);
-      if (!originalRow) return row;
+      const specialCharacterRow = specialCharactersRows.find(
+        (item) => item.rowIndex === rowIndex,
+      );
+      if (!specialCharacterRow) return row;
 
       return row.map((letter, letterIndex) => ({
         ...letter,
-        content: originalRow.letters[letterIndex],
+        content: specialCharacterRow.letters[letterIndex],
       }));
     },
-    [originalRows, rows],
+    [specialCharactersRows, rows],
   );
 
   useEffect(() => {
@@ -133,15 +172,15 @@ export const GameProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     const nextCorrectRows: number[] = [];
-    const nextOriginalRows: originalRow[] = [];
+    const nextInitialRows: SpecialCharatersRow[] = [];
 
     rows.forEach((row, rowIndex) => {
       const word = row.map((letter) => letter.content).join('');
-      const foundWord = words.find((item) => item.normalized === word);
+      const foundWord = (words as Word[]).find((item) => item.normalized === word);
 
       if (foundWord) {
         nextCorrectRows.push(rowIndex);
-        nextOriginalRows.push({
+        nextInitialRows.push({
           rowIndex,
           letters: foundWord.word.split(''),
         });
@@ -149,20 +188,36 @@ export const GameProvider: React.FC = ({ children }) => {
     });
 
     localStorage.setItem(LOCAL_ROW_KEY, JSON.stringify({ puzzleId: puzzle.id, rows }));
-    setOriginalRows(nextOriginalRows);
+    setSpecialCharactersRows(nextInitialRows);
     setCorrectRows(nextCorrectRows);
   }, [rows]);
 
   useEffect(() => {
-    if (correctRows.length === ROWS_AMOUNT && letters.length === 0) {
-      localStorage.removeItem(LOCAL_ROW_KEY);
+    const allRowsCorrect = correctRows.length === ROWS_AMOUNT;
+    const noLettersInBench = letters.length === 0;
+    const firstWin = !wins.includes(puzzleIndex);
+
+    if (allRowsCorrect && noLettersInBench && firstWin) {
       alert('Ganhastes 🎉');
+      setWins((prevWins) => [...prevWins, puzzleIndex]);
     }
   }, [correctRows]);
 
+  useEffect(() => {
+    localStorage.setItem(LOCAL_WINS_KEY, JSON.stringify(wins));
+  }, [wins]);
+
   return (
     <GameContext.Provider
-      value={{ rows, letters, correctRows, originalRows, dropLetter, getOriginalRow }}
+      value={{
+        rows,
+        letters,
+        correctRows,
+        specialCharactersRows,
+        puzzleIndex,
+        dropLetter,
+        getSpecialCharactersRow,
+      }}
     >
       {children}
     </GameContext.Provider>

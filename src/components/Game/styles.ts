@@ -77,7 +77,16 @@ export const LetterContainer = styled('span', {
   },
 });
 
-export const LettersContainer = styled('div', {
+export const BenchContainer = styled('div', {
+  minWidth: `calc(${UNUSED_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
+    UNUSED_ROW_LENGTH + 1
+  }))`,
+  height: `calc(${MAX_LETTERS / UNUSED_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
+    MAX_LETTERS / UNUSED_ROW_LENGTH - 1
+  }))`,
+});
+
+export const BenchLettersContainer = styled('div', {
   display: 'flex',
   marginBottom: '$0',
 
@@ -94,11 +103,4 @@ export const LettersContainer = styled('div', {
       },
     },
   },
-});
-
-export const UnusedContainer = styled('div', {
-  minWidth: `calc(${UNUSED_ROW_LENGTH} * $letterSize + ($letterSpacing * ${UNUSED_ROW_LENGTH}))`,
-  height: `calc(${MAX_LETTERS / UNUSED_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
-    MAX_LETTERS / UNUSED_ROW_LENGTH - 1
-  }))`,
 });
