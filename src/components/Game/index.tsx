@@ -1,4 +1,4 @@
-import { MAX_LETTERS, UNUSED_DROPPABLE_ID, UNUSED_ROW_LENGTH } from 'contants';
+import { MAX_LETTERS, UNUSED_DROPPABLE_ID, UNUSED_ROW_LENGTH } from 'constants';
 import { useGame } from 'hooks';
 import _ from 'lodash';
 import React from 'react';
@@ -6,6 +6,7 @@ import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautif
 
 import {
   GameContainer,
+  GameTitle,
   LetterContainer,
   LettersContainer,
   RowContainer,
@@ -65,7 +66,8 @@ export const Game: React.FC = () => {
 
   return (
     <GameContainer>
-      imbroglio
+      <GameTitle>imbroglio</GameTitle>
+
       <DragDropContext onDragEnd={onDragEnd}>
         {/* Rows */}
         <RowsContainer>

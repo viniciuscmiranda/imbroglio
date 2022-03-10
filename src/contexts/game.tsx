@@ -1,14 +1,8 @@
 import puzzles from 'assets/data/puzzles.json';
 import words from 'assets/data/words.json';
-import { ROWS_AMOUNT } from 'contants';
+import { ROWS_AMOUNT } from 'constants';
 import _ from 'lodash';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
-
-type Word = {
-  id: number;
-  word: string;
-  normalized: string;
-};
 
 type Letter = {
   id: string;
@@ -39,20 +33,22 @@ type GameContextProps = {
   getOriginalRow: (row: Row, rowIndex: number) => Row;
 };
 
+const puzzle =
+  // puzzles.find((p) => new Date(p.date).getDate() === new Date().getDate()) ||
+  puzzles[Math.floor(Math.random() * puzzles.length)];
+
+console.log(puzzle);
+
+const initialLetters = puzzle.letters.map((content) => ({
+  id: _.uniqueId(),
+  content,
+}));
+
 const LOCAL_ROW_KEY = 'ROWS';
 
 export const GameContext = createContext({} as GameContextProps);
 
 export const GameProvider: React.FC = ({ children }) => {
-  const puzzle =
-    puzzles.find((p) => new Date(p.date).getDate() === new Date().getDate()) ||
-    puzzles[Math.floor(Math.random() * puzzles.length)];
-
-  const initialLetters = puzzle.letters.map((content) => ({
-    id: _.uniqueId(),
-    content,
-  }));
-
   const [letters, setLetters] = useState<Letter[]>(initialLetters);
   const [correctRows, setCorrectRows] = useState<number[]>([]);
   const [originalRows, setOriginalRows] = useState<originalRow[]>([]);
@@ -106,10 +102,17 @@ export const GameProvider: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    const storedRows = localStorage.getItem(LOCAL_ROW_KEY);
+    const storedData = localStorage.getItem(LOCAL_ROW_KEY);
+    if (!storedData) return;
 
-    if (!storedRows) return;
-    const nextRows = JSON.parse(storedRows) as Row[];
+    const parsedData = JSON.parse(storedData);
+
+    if (parsedData.puzzleId !== puzzle.id) {
+      localStorage.removeItem(LOCAL_ROW_KEY);
+      return;
+    }
+
+    const nextRows = parsedData.rows as Row[];
     let rowsSample = [...nextRows].flat();
 
     const nextLetters: Letter[] = [];
@@ -129,41 +132,12 @@ export const GameProvider: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const wordsList: Word[] = [
-      ...words,
-      ...[
-        'amor',
-        'amora',
-        'amarra',
-        'roma',
-        'marrom',
-        'cama',
-        'feira',
-        'forma',
-        'mora',
-        'carro',
-        'caro',
-      ].map((word) => ({ word, id: Number(_.uniqueId()), normalized: word })),
-    ];
-
-    wordsList.push({
-      id: Number(_.uniqueId()),
-      word: 'força',
-      normalized: 'forca',
-    });
-
-    wordsList.push({
-      id: Number(_.uniqueId()),
-      word: 'laço',
-      normalized: 'laco',
-    });
-
     const nextCorrectRows: number[] = [];
     const nextOriginalRows: originalRow[] = [];
 
     rows.forEach((row, rowIndex) => {
       const word = row.map((letter) => letter.content).join('');
-      const foundWord = wordsList.find((item) => item.normalized === word);
+      const foundWord = words.find((item) => item.normalized === word);
 
       if (foundWord) {
         nextCorrectRows.push(rowIndex);
@@ -174,10 +148,17 @@ export const GameProvider: React.FC = ({ children }) => {
       }
     });
 
-    localStorage.setItem(LOCAL_ROW_KEY, JSON.stringify(rows));
+    localStorage.setItem(LOCAL_ROW_KEY, JSON.stringify({ puzzleId: puzzle.id, rows }));
     setOriginalRows(nextOriginalRows);
     setCorrectRows(nextCorrectRows);
   }, [rows]);
+
+  useEffect(() => {
+    if (correctRows.length === ROWS_AMOUNT && letters.length === 0) {
+      localStorage.removeItem(LOCAL_ROW_KEY);
+      alert('Ganhastes 🎉');
+    }
+  }, [correctRows]);
 
   return (
     <GameContext.Provider

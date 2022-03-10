@@ -1,4 +1,4 @@
-import { MAX_LETTERS, ROWS_AMOUNT, UNUSED_ROW_LENGTH } from 'contants';
+import { MAX_LETTERS, ROWS_AMOUNT, UNUSED_ROW_LENGTH } from 'constants';
 import { styled } from 'styles';
 
 export const GameContainer = styled('div', {
@@ -10,6 +10,13 @@ export const GameContainer = styled('div', {
   justifyContent: 'center',
   userSelect: 'none',
   gap: '1em',
+});
+
+export const GameTitle = styled('p', {
+  fontWeight: 'bold',
+  marginBottom: '1rem',
+  color: '$orange',
+  fontSize: '2rem',
 });
 
 export const RowsContainer = styled('div', {

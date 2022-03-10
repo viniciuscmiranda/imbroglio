@@ -1,5 +1,5 @@
 import { createStitches } from '@stitches/react';
-import { LETTERS_PER_ROW } from 'contants';
+import { LETTERS_PER_ROW } from 'constants';
 
 // configurações de estilo (css)
 export const { globalCss, styled } = createStitches({
