@@ -59,6 +59,18 @@ export const global = globalCss({
     boxSizing: 'border-box',
     fontSize: '18px',
     fontFamily: "'Quicksand', sans-serif",
+
+    '@media (max-width: 720px)': {
+      fontSize: '16px',
+    },
+
+    '@media (max-width: 640px)': {
+      fontSize: '12px',
+    },
+
+    '@media (max-width: 320px)': {
+      fontSize: '8px',
+    },
   },
 
   '#root': {
