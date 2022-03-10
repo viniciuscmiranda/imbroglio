@@ -1,6 +1,5 @@
 import { MAX_LETTERS, UNUSED_DROPPABLE_ID, UNUSED_ROW_LENGTH } from 'constants';
 import { useGame } from 'hooks';
-import _ from 'lodash';
 import React from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
@@ -107,7 +106,7 @@ export const Game: React.FC = () => {
         {/* Unused */}
         <UnusedContainer>
           {Array.from({ length: MAX_LETTERS / UNUSED_ROW_LENGTH }).map(
-            (/* row */, rowIndex) => (
+            (_row, rowIndex) => (
               <Droppable
                 key={rowIndex}
                 droppableId={`${UNUSED_DROPPABLE_ID}-${rowIndex}`}
