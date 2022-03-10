@@ -107,7 +107,7 @@ export const Game: React.FC = () => {
         {/* Unused */}
         <UnusedContainer>
           {Array.from({ length: MAX_LETTERS / UNUSED_ROW_LENGTH }).map(
-            (row, rowIndex) => (
+            (/* row */, rowIndex) => (
               <Droppable
                 key={rowIndex}
                 droppableId={`${UNUSED_DROPPABLE_ID}-${rowIndex}`}
