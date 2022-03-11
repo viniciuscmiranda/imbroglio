@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiGithub, FiTwitch, FiTwitter } from 'react-icons/fi';
+import { FiGithub, FiTwitter } from 'react-icons/fi';
 import { SiNotion } from 'react-icons/si';
 import { Section, SectionTitle } from 'styles/components';
 
@@ -28,7 +28,6 @@ const SocialSection: React.FC = () => {
             href="https://github.com/viniciuscmiranda"
           >
             <FiGithub />
-            {/* viniciuscmiranda */}
             Vini
           </SocialButton>
 
@@ -38,7 +37,6 @@ const SocialSection: React.FC = () => {
             href="https://twitter.com/_seis66"
           >
             <FiTwitter />
-            {/* _seis66 */}
             Vini
           </SocialButton>
         </SocialContainer>
@@ -50,8 +48,7 @@ const SocialSection: React.FC = () => {
             href="https://github.com/joaolucas26"
           >
             <FiGithub />
-            {/* joaolucas26 */}
-            Jão
+            João Lucas
           </SocialButton>
 
           <SocialButton
@@ -60,18 +57,8 @@ const SocialSection: React.FC = () => {
             href="https://twitter.com/JaozinBaterista"
           >
             <FiTwitter />
-            {/* JaozinBaterista */}
-            Jão
+            João Lucas
           </SocialButton>
-
-          {/* <SocialButton
-            variant="twitch"
-            target="_blank"
-            href="https://www.twitch.tv/jaozinbaterista"
-          >
-            <FiTwitch />
-            jaozinbaterista
-          </SocialButton> */}
         </SocialContainer>
       </Social>
     </Section>
