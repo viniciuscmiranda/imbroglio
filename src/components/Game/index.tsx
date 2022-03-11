@@ -1,3 +1,5 @@
+import { Actions } from 'components/Actions';
+import { Title } from 'components/Title';
 import { MAX_LETTERS, UNUSED_DROPPABLE_ID, UNUSED_ROW_LENGTH } from 'constants';
 import { useGame } from 'hooks';
 import React from 'react';
@@ -7,15 +9,14 @@ import {
   BenchContainer,
   BenchLettersContainer,
   GameContainer,
-  GameTitle,
+  HeaderContainer,
   LetterContainer,
   RowContainer,
   RowsContainer,
 } from './styles';
 
 export const Game: React.FC = () => {
-  const { rows, letters, correctRows, puzzleIndex, getSpecialCharactersRow, dropLetter } =
-    useGame();
+  const { rows, letters, correctRows, getSpecialCharactersRow, dropLetter } = useGame();
 
   function onDragEnd(result: DropResult) {
     if (!result.destination) return;
@@ -66,12 +67,14 @@ export const Game: React.FC = () => {
 
   return (
     <GameContainer>
-      <GameTitle>
-        imbroglio<span>#{puzzleIndex}</span>
-      </GameTitle>
+      <HeaderContainer>
+        <Title />
+        <Actions />
+      </HeaderContainer>
 
       <DragDropContext onDragEnd={onDragEnd}>
         {/* Rows */}
+
         <RowsContainer>
           {rows.map((row, rowIndex) => {
             const originalRow = getSpecialCharactersRow(row, rowIndex);

@@ -12,11 +12,11 @@ export const GameContainer = styled('div', {
   gap: '1em',
 });
 
-export const GameTitle = styled('p', {
-  fontWeight: 'bold',
-  marginBottom: '1rem',
-  color: '$orange',
-  fontSize: '2rem',
+export const HeaderContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
 });
 
 export const RowsContainer = styled('div', {
@@ -64,7 +64,7 @@ export const LetterContainer = styled('span', {
 
   '&:focus': {
     outline: 'none',
-    borderColor: '$darkerBlue',
+    borderColor: 'black',
   },
 
   variants: {

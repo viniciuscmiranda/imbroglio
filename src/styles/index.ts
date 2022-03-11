@@ -12,12 +12,14 @@ export const { globalCss, styled } = createStitches({
       darkerBlue: '#143a4f',
       yellow: '#F2CD5D',
       orange: '#DEA54B',
+      darkOrange: '#cc943d',
       green: '#169873',
       darkGreen: '#0c7d5d',
       white: '#fff',
       gray: '#aaa',
       lightGray: '#e5e5e5',
       lighterGray: '#f1f1f1',
+      overlay: 'rgba(0,0,0,.3)',
 
       stroke: '$lightGray',
       background: '$yellow',
@@ -43,6 +45,8 @@ export const { globalCss, styled } = createStitches({
 
     space: {
       0: '.5rem',
+      1: '1rem',
+      2: '2rem',
     },
 
     radii: {
@@ -57,18 +61,18 @@ export const global = globalCss({
     padding: 0,
     margin: 0,
     boxSizing: 'border-box',
-    fontSize: '18px',
+    fontSize: '16px',
     fontFamily: "'Quicksand', sans-serif",
-
-    '@media (max-width: 720px)': {
-      fontSize: '16px',
-    },
 
     '@media (max-width: 640px)': {
       fontSize: '12px',
     },
 
-    '@media (max-width: 320px)': {
+    '@media (max-width: 400px)': {
+      fontSize: '10px',
+    },
+
+    '@media (max-width: 300px)': {
       fontSize: '8px',
     },
   },
