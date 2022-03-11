@@ -1,3 +1,4 @@
+import { GAME_NAME } from 'constants';
 import { useGame } from 'hooks';
 import React from 'react';
 
@@ -8,7 +9,8 @@ export const Title: React.FC = () => {
 
   return (
     <GameTitle>
-      imbróglio<span>#{puzzleIndex}</span>
+      {GAME_NAME}
+      <span>#{puzzleIndex}</span>
     </GameTitle>
   );
 };

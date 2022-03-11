@@ -28,7 +28,8 @@ const SocialSection: React.FC = () => {
             href="https://github.com/viniciuscmiranda"
           >
             <FiGithub />
-            viniciuscmiranda
+            {/* viniciuscmiranda */}
+            Vini
           </SocialButton>
 
           <SocialButton
@@ -37,7 +38,8 @@ const SocialSection: React.FC = () => {
             href="https://twitter.com/_seis66"
           >
             <FiTwitter />
-            _seis66
+            {/* _seis66 */}
+            Vini
           </SocialButton>
         </SocialContainer>
 
@@ -48,7 +50,8 @@ const SocialSection: React.FC = () => {
             href="https://github.com/joaolucas26"
           >
             <FiGithub />
-            joaolucas26
+            {/* joaolucas26 */}
+            Jão
           </SocialButton>
 
           <SocialButton
@@ -57,17 +60,18 @@ const SocialSection: React.FC = () => {
             href="https://twitter.com/JaozinBaterista"
           >
             <FiTwitter />
-            JaozinBaterista
+            {/* JaozinBaterista */}
+            Jão
           </SocialButton>
 
-          <SocialButton
+          {/* <SocialButton
             variant="twitch"
             target="_blank"
             href="https://www.twitch.tv/jaozinbaterista"
           >
             <FiTwitch />
             jaozinbaterista
-          </SocialButton>
+          </SocialButton> */}
         </SocialContainer>
       </Social>
     </Section>
@@ -86,7 +90,7 @@ const FilesSection: React.FC = () => {
           href="https://github.com/viniciuscmiranda/imbroglio"
         >
           <FiGithub />
-          App
+          Código fonte
         </SocialButton>
 
         <SocialButton
@@ -95,7 +99,7 @@ const FilesSection: React.FC = () => {
           href="https://github.com/joaolucas26/imbroglio-data"
         >
           <FiGithub />
-          Dados
+          Base de dados
         </SocialButton>
 
         <SocialButton
@@ -104,7 +108,7 @@ const FilesSection: React.FC = () => {
           href="https://www.notion.so/vini6/Imbr-glio-97d3647c55874152b2e506046a877d2d"
         >
           <SiNotion />
-          Notion
+          Roadmap
         </SocialButton>
       </SocialContainer>
     </Section>

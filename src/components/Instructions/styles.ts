@@ -13,7 +13,7 @@ export const List = styled('ul', {
     display: 'flex',
     alignItems: 'center',
     gap: '$0',
-    color: '$darkOrange',
+    color: '$orange',
     fontWeight: 'bold',
 
     '&:not(:last-child)': {

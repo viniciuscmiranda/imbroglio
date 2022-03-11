@@ -35,8 +35,14 @@ export const Button = styled('button', {
   outlineColor: 'black',
 
   transition: 'transform .2s ease',
-  '&:hover': {
+  '&:hover:not(:disabled)': {
     transform: 'scale(1.1)',
+  },
+
+  '&:disabled': {
+    cursor: 'not-allowed',
+    backgroundColor: '$gray',
+    borderColor: '$darkGray',
   },
 
   variants: {

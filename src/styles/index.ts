@@ -17,6 +17,7 @@ export const { globalCss, styled } = createStitches({
       darkGreen: '#0c7d5d',
       white: '#fff',
       gray: '#aaa',
+      darkGray: '#888',
       lightGray: '#e5e5e5',
       lighterGray: '#f1f1f1',
       overlay: 'rgba(0,0,0,.3)',
