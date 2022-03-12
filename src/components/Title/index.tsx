@@ -2,15 +2,17 @@ import { GAME_NAME } from 'constants';
 import { useGame } from 'hooks';
 import React from 'react';
 
-import { GameTitle } from './styles';
+import { Container, GameTitle } from './styles';
 
 export const Title: React.FC = () => {
-  const { puzzleIndex } = useGame();
+  const { puzzleId } = useGame();
 
   return (
-    <GameTitle>
-      {GAME_NAME}
-      <span>#{puzzleIndex}</span>
-    </GameTitle>
+    <Container>
+      <GameTitle>
+        {GAME_NAME}
+        <span>#{puzzleId}</span>
+      </GameTitle>
+    </Container>
   );
 };

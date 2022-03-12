@@ -12,3 +12,8 @@ export const Container = styled('div', {
     gap: '$0',
   },
 });
+
+export const Points = styled('p', {
+  fontWeight: 'bold',
+  color: '$darkBlue',
+});

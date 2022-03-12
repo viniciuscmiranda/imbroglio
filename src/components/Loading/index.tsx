@@ -16,7 +16,7 @@ export const Loading: React.FC<LoadingProps> = ({ error }) => {
           Carregando
         </>
       ) : (
-        <>{'Algo deu errado :('}</>
+        <>{'Erro de conexão :('}</>
       )}
     </Container>
   );

@@ -48,6 +48,7 @@ export const Content = styled('div', {
   '@media (max-width: 40rem)': {
     width: 'calc(100% - 3rem)',
     maxHeight: 'calc(100% - 3rem)',
+    '*': { fontSize: '1.3rem' },
   },
 
   variants: {

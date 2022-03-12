@@ -10,13 +10,21 @@ import {
   BenchLettersContainer,
   GameContainer,
   HeaderContainer,
+  LastSolution,
   LetterContainer,
   RowContainer,
   RowsContainer,
 } from './styles';
 
 export const Game: React.FC = () => {
-  const { rows, letters, correctRows, getSpecialCharactersRow, dropLetter } = useGame();
+  const {
+    rows,
+    letters,
+    correctRows,
+    getSpecialCharactersRow,
+    dropLetter,
+    lastSolution,
+  } = useGame();
 
   function onDragEnd(result: DropResult) {
     if (!result.destination) return;
@@ -74,7 +82,6 @@ export const Game: React.FC = () => {
 
       <DragDropContext onDragEnd={onDragEnd}>
         {/* Rows */}
-
         <RowsContainer>
           {rows.map((row, rowIndex) => {
             const originalRow = getSpecialCharactersRow(row, rowIndex);
@@ -108,6 +115,17 @@ export const Game: React.FC = () => {
             );
           })}
         </RowsContainer>
+
+        {/* Last Solution */}
+        {lastSolution && (
+          <LastSolution>
+            Solução de ontem:
+            <span>
+              {' '}
+              {lastSolution.map((s) => s[0].toUpperCase() + s.substring(1)).join(', ')}
+            </span>
+          </LastSolution>
+        )}
 
         {/* Bench */}
         <BenchContainer>

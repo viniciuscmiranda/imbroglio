@@ -2,35 +2,34 @@ import { Infos } from 'components/Infos';
 import { Instructions } from 'components/Instructions';
 import { Modal } from 'components/Modal';
 import { Stats } from 'components/Stats';
-import { GAME_NAME } from 'constants';
+import { APP_URL, GAME_NAME } from 'constants';
 import { useGame } from 'hooks';
 import React from 'react';
-import { FiAward, FiHelpCircle, FiInfo, FiRefreshCw, FiShuffle } from 'react-icons/fi';
+import {
+  FiAward,
+  FiHelpCircle,
+  FiInfo,
+  FiRefreshCw,
+  FiShare2,
+  FiShuffle,
+} from 'react-icons/fi';
 import { Button } from 'styles/components';
 
-import { Container } from './styles';
+import { Container, Points } from './styles';
 
 const iconSize = '1.35rem';
 
 export const Actions: React.FC = () => {
-  const { resetGame, shuffleBench, rows, letters } = useGame();
+  const { resetGame, shuffleBench, points, share } = useGame();
 
   return (
     <Container>
       <div>
-        <Button
-          aria-label="Recomeçar"
-          disabled={!rows.flat().length}
-          onClick={() => resetGame()}
-        >
+        <Button aria-label="Recomeçar" onClick={() => resetGame()}>
           <FiRefreshCw size={iconSize} />
         </Button>
 
-        <Button
-          aria-label="Embaralhar letras"
-          disabled={!letters.length}
-          onClick={() => shuffleBench()}
-        >
+        <Button aria-label="Embaralhar letras" onClick={() => shuffleBench()}>
           <FiShuffle size={iconSize} />
         </Button>
 
@@ -44,6 +43,12 @@ export const Actions: React.FC = () => {
         >
           <Stats />
         </Modal>
+
+        <Button aria-label="Compartilhar" onClick={() => share()}>
+          <FiShare2 size={iconSize} />
+        </Button>
+
+        <Points>{points} Pontos</Points>
       </div>
 
       <div>
@@ -57,7 +62,6 @@ export const Actions: React.FC = () => {
         >
           <Infos />
         </Modal>
-
         <Modal
           title={`Bem-vindo ao ${GAME_NAME}!`}
           trigger={

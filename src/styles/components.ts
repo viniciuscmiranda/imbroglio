@@ -3,8 +3,8 @@ import { styled } from 'styles';
 export const Section = styled('div');
 
 export const SectionTitle = styled('h3', {
-  fontSize: '1.25rem',
-  marginBottom: '.75rem',
+  fontSize: '1.25em',
+  marginBottom: '.75em',
   display: 'block',
   color: '$orange',
 

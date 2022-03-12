@@ -2,14 +2,12 @@ import { createStitches } from '@stitches/react';
 import { LETTERS_PER_ROW } from 'constants';
 
 // configurações de estilo (css)
-export const { globalCss, styled } = createStitches({
+export const { globalCss, styled, keyframes } = createStitches({
   theme: {
     colors: {
-      pink: '#D741A7',
-      purple: '#3A1772',
-      blue: '#5398BE',
-      darkBlue: '#3a7b9e',
-      darkerBlue: '#143a4f',
+      blue: '#3B88C3',
+      darkBlue: '#2a72a8',
+      darkerBlue: '#195785',
       yellow: '#F2CD5D',
       orange: '#DEA54B',
       darkOrange: '#cc943d',
@@ -30,10 +28,10 @@ export const { globalCss, styled } = createStitches({
     },
 
     fontSizes: {
-      small: '.7rem',
-      normal: '1rem',
-      large: '1.5rem',
-      larger: '2rem',
+      small: '.7em',
+      normal: '1em',
+      large: '1.5em',
+      larger: '2em',
     },
 
     sizes: {
@@ -45,9 +43,9 @@ export const { globalCss, styled } = createStitches({
     },
 
     space: {
-      0: '.5rem',
-      1: '1rem',
-      2: '2rem',
+      0: '.5em',
+      1: '1em',
+      2: '2em',
     },
 
     radii: {

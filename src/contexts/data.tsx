@@ -1,29 +1,31 @@
 import { Loading } from 'components/Loading';
 import { MAX_REQUEST_TRIES } from 'constants';
+import moment from 'moment';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { Letter, Puzzle, Word } from 'types';
 
-type DataContextProps = {
+export type DataContextProps = {
   words: Word[];
   puzzles: Puzzle[];
   puzzle: Puzzle;
-  puzzleIndex: number;
   initialLetters: Letter[];
+  lastSolution: string[] | null;
 
   getPuzzle: (random: boolean) => {
     puzzle: Puzzle;
-    puzzleIndex: number;
     initialLetters: Letter[];
+    lastSolution: string[] | null;
   };
 };
 
 export const DataContext = createContext({} as DataContextProps);
 
 export const DataProvider: React.FC = ({ children }) => {
+  const [lastSolution, setLastSolution] =
+    useState<DataContextProps['lastSolution']>(null);
   const [words, setWords] = useState<DataContextProps['words']>([]);
   const [puzzles, setPuzzles] = useState<DataContextProps['puzzles']>([]);
   const [puzzle, setPuzzle] = useState<DataContextProps['puzzle'] | null>(null);
-  const [puzzleIndex, setPuzzleIndex] = useState<DataContextProps['puzzleIndex']>(0);
   const [initialLetters, setInitialLetters] = useState<
     DataContextProps['initialLetters']
   >([]);
@@ -41,10 +43,8 @@ export const DataProvider: React.FC = ({ children }) => {
         fetch('https://joaolucas26.github.io/imbroglio-data/words.json'),
       ]);
 
-      const [puzzlesData, wordsData] = await Promise.all([
-        puzzlesRes.json(),
-        wordsRes.json(),
-      ]);
+      const puzzlesData = await puzzlesRes.json();
+      const wordsData = await wordsRes.json();
 
       setWords(wordsData);
       setPuzzles(puzzlesData);
@@ -62,13 +62,13 @@ export const DataProvider: React.FC = ({ children }) => {
 
   const getPuzzle = useCallback(
     (random?: boolean) => {
-      let puzzleIndex = 0;
-      let puzzle: Puzzle | undefined;
+      let nextPuzzle: Puzzle | undefined;
+      let nextLastSolution: string[] | null = null;
 
       if (!random) {
-        puzzle = (puzzles as Puzzle[]).find((p, i) => {
-          if (new Date(p.date).getDate() === new Date().getDate()) {
-            puzzleIndex = i + 1;
+        nextPuzzle = puzzles.find((p, pIndex) => {
+          if (moment(p.date).isSame(moment(), 'day')) {
+            nextLastSolution = puzzles[pIndex - 1]?.solution || null;
             return true;
           }
 
@@ -76,17 +76,21 @@ export const DataProvider: React.FC = ({ children }) => {
         });
       }
 
-      if (random || !puzzle) {
-        puzzleIndex = Math.floor(Math.random() * puzzles.length);
-        puzzle = (puzzles as Puzzle[])[puzzleIndex];
+      if (random || !nextPuzzle) {
+        const puzzleIndex = Math.floor(Math.random() * puzzles.length);
+        nextPuzzle = puzzles[puzzleIndex];
       }
 
-      const initialLetters = puzzle.letters.map((content) => ({
+      const nextInitialLetters = nextPuzzle.letters.map((content) => ({
         id: String(Math.random()),
         content,
       }));
 
-      return { puzzle, puzzleIndex, initialLetters };
+      return {
+        puzzle: nextPuzzle,
+        lastSolution: nextLastSolution,
+        initialLetters: nextInitialLetters,
+      };
     },
     [puzzles],
   );
@@ -100,15 +104,15 @@ export const DataProvider: React.FC = ({ children }) => {
 
     const data = getPuzzle();
     setPuzzle(data.puzzle);
-    setPuzzleIndex(data.puzzleIndex);
     setInitialLetters(data.initialLetters);
+    setLastSolution(data.lastSolution);
   }, [puzzles]);
 
   if (loading || !puzzle) return <Loading error={error || (!loading && !puzzle)} />;
 
   return (
     <DataContext.Provider
-      value={{ words, puzzles, puzzle, puzzleIndex, initialLetters, getPuzzle }}
+      value={{ words, puzzles, puzzle, initialLetters, lastSolution, getPuzzle }}
     >
       {children}
     </DataContext.Provider>

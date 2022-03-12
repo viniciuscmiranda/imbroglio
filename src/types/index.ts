@@ -2,6 +2,7 @@ export type Puzzle = {
   id: number;
   date: string;
   letters: string[];
+  solution: string[];
 };
 
 export type Word = {

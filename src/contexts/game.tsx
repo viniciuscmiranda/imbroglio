@@ -1,10 +1,12 @@
-import { ROWS_AMOUNT } from 'constants';
-import { useData } from 'hooks';
+import { APP_URL, GAME_NAME, ROWS_AMOUNT } from 'constants';
+import { useData, useToast } from 'hooks';
 import _ from 'lodash';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
-import { Letter, LetterType, Row, SpecialCharactersRow } from 'types';
+import { Letter, LetterType, Puzzle, Row, SpecialCharactersRow } from 'types';
 
-type GameContextProps = {
+import { DataContextProps } from './data';
+
+export type GameContextProps = {
   rows: Row[];
   letters: Letter[];
   correctRows: number[];
@@ -13,7 +15,10 @@ type GameContextProps = {
   getSpecialCharactersRow: (row: Row, rowIndex: number) => Row;
   resetGame: () => void;
   shuffleBench: () => void;
-  puzzleIndex: number;
+  share: () => void;
+  lastSolution: DataContextProps['lastSolution'];
+  puzzleId: Puzzle['id'];
+  points: number;
 };
 
 const LOCAL_ROW_KEY = 'ROWS';
@@ -22,19 +27,27 @@ const LOCAL_WINS_KEY = 'WINS';
 export const GameContext = createContext({} as GameContextProps);
 
 export const GameProvider: React.FC = ({ children }) => {
-  const { words, initialLetters, puzzle, puzzleIndex } = useData();
+  const { words, initialLetters, puzzle, lastSolution } = useData();
+  const { toast } = useToast();
 
   const initialRows = Array.from({ length: ROWS_AMOUNT }).map(() => []);
 
-  const [letters, setLetters] = useState<Letter[]>(initialLetters);
-  const [correctRows, setCorrectRows] = useState<number[]>([]);
+  const [rows, setRows] = useState<GameContextProps['rows']>(initialRows);
+  const [letters, setLetters] = useState<GameContextProps['letters']>(initialLetters);
+  const [correctRows, setCorrectRows] = useState<GameContextProps['correctRows']>([]);
   const [specialCharactersRows, setSpecialCharactersRows] = useState<
     SpecialCharactersRow[]
   >([]);
+
+  const [points, setPoints] = useState<GameContextProps['points']>(0);
   const [wins, setWins] = useState<number[]>(
     JSON.parse(localStorage.getItem(LOCAL_WINS_KEY) || '[]'),
   );
-  const [rows, setRows] = useState<Row[]>(initialRows);
+
+  const win = useCallback(() => {
+    alert('Ganhastes 🎉');
+    setWins((prevWins) => [...prevWins, puzzle.id]);
+  }, [wins]);
 
   const dropLetter = useCallback(
     ({ letter, nextRowIndex, nextIndex, index, rowIndex }: LetterType) => {
@@ -84,9 +97,20 @@ export const GameProvider: React.FC = ({ children }) => {
   );
 
   const resetGame = useCallback(() => {
-    setCorrectRows([]);
-    setRows(initialRows);
-    setLetters(initialLetters);
+    // setCorrectRows([]);
+    const nextRows: Row[] = [];
+    const nextLetters: Letter[][] = [];
+
+    rows.forEach((row, rowIndex) => {
+      if (correctRows.includes(rowIndex)) nextRows.push(row);
+      else {
+        nextLetters.push(row);
+        nextRows.push([]);
+      }
+    });
+
+    setRows(nextRows);
+    setLetters([...letters, ...nextLetters.flat()]);
   }, [letters, rows, correctRows]);
 
   const shuffleBench = useCallback(() => {
@@ -94,6 +118,40 @@ export const GameProvider: React.FC = ({ children }) => {
     setLetters(nextLetters);
   }, [letters]);
 
+  const share = useCallback(() => {
+    const unusedLetters = rows.reduce((acc, row, rowIndex) => {
+      if (correctRows.includes(rowIndex)) return acc;
+      else return acc + row.length;
+    }, letters.length);
+
+    const correctRowsContent: string[] = [];
+    rows.forEach((row, rowIndex) => {
+      if (!correctRows.includes(rowIndex)) return;
+      for (const _letter of row) correctRowsContent.push('🟩');
+      correctRowsContent.push('\n');
+    });
+
+    const shareContent: string[] | string = [];
+
+    shareContent.push(`🔡 ${GAME_NAME}#${puzzle.id}`);
+    shareContent.push(`🟦 ${unusedLetters} letras não usadas`);
+    shareContent.push(``);
+    shareContent.push(`⭐ ${points} pontos`);
+    shareContent.push(correctRowsContent.join(''));
+    shareContent.push('Jogue comigo!');
+    shareContent.push(APP_URL);
+
+    navigator.clipboard.writeText(shareContent.join('\n')).then(() => {
+      toast('Copiado!');
+    });
+
+    // navigator.share({
+    //   title: GAME_NAME,
+    //   text: shareContent.join('\n'),
+    // });
+  }, [points, correctRows, rows, puzzle]);
+
+  // get stored data
   useEffect(() => {
     const storedData = localStorage.getItem(LOCAL_ROW_KEY);
     if (!storedData) return;
@@ -124,6 +182,7 @@ export const GameProvider: React.FC = ({ children }) => {
     setLetters(nextLetters);
   }, []);
 
+  // check words
   useEffect(() => {
     const nextCorrectRows: number[] = [];
     const nextInitialRows: SpecialCharactersRow[] = [];
@@ -146,16 +205,24 @@ export const GameProvider: React.FC = ({ children }) => {
     setCorrectRows(nextCorrectRows);
   }, [rows]);
 
+  // check win
   useEffect(() => {
-    const allRowsCorrect = correctRows.length === ROWS_AMOUNT;
+    const allRowsCorrect = correctRows.length === rows.filter((row) => row.length).length;
     const noLettersInBench = letters.length === 0;
-    const firstWin = !wins.includes(puzzleIndex);
+    const firstWin = !wins.includes(puzzle.id);
 
-    if (allRowsCorrect && noLettersInBench && firstWin) {
-      alert('Ganhastes 🎉');
-      setWins((prevWins) => [...prevWins, puzzleIndex]);
-    }
+    if (allRowsCorrect && noLettersInBench && firstWin) win();
   }, [correctRows]);
+
+  // set points
+  useEffect(() => {
+    const nextPoints = rows.reduce((acc, row, rowIndex) => {
+      if (!correctRows.includes(rowIndex)) return acc;
+      return acc + row.length * row.length;
+    }, 0);
+
+    setPoints(nextPoints);
+  }, [rows, correctRows]);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_WINS_KEY, JSON.stringify(wins));
@@ -168,11 +235,14 @@ export const GameProvider: React.FC = ({ children }) => {
         letters,
         correctRows,
         specialCharactersRows,
-        puzzleIndex,
+        puzzleId: puzzle.id,
+        points,
+        lastSolution,
         dropLetter,
         getSpecialCharactersRow,
         resetGame,
         shuffleBench,
+        share,
       }}
     >
       {children}

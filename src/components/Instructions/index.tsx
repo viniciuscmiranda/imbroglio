@@ -1,7 +1,7 @@
 import dragLetter from 'assets/images/drag-letter.png';
 import wordCompleted from 'assets/images/word-completed.png';
 import React from 'react';
-import { FiAward, FiRefreshCw, FiShuffle } from 'react-icons/fi';
+import { FiAward, FiRefreshCw, FiShare2, FiShuffle } from 'react-icons/fi';
 import { Section, SectionTitle } from 'styles/components';
 
 import { Container, Image, List } from './styles';
@@ -31,13 +31,16 @@ export const Instructions: React.FC = () => {
         <SectionTitle>💣 Ações</SectionTitle>
         <List>
           <li>
-            <FiRefreshCw /> Recomeçar
+            <FiRefreshCw /> Devolver letras para a bancada
           </li>
           <li>
-            <FiShuffle /> Embaralhar letras
+            <FiShuffle /> Embaralhar letras da bancada
           </li>
           <li>
             <FiAward /> Minhas estatísticas
+          </li>
+          <li>
+            <FiShare2 /> Compartilhar!
           </li>
         </List>
       </Section>

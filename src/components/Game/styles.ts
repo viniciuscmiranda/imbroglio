@@ -104,3 +104,9 @@ export const BenchLettersContainer = styled('div', {
     },
   },
 });
+
+export const LastSolution = styled('p', {
+  textAlign: 'center',
+  color: '$darkOrange',
+  fontWeight: 'bold',
+});
