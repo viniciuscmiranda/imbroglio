@@ -2,7 +2,7 @@ import { Infos } from 'components/Infos';
 import { Instructions } from 'components/Instructions';
 import { Modal } from 'components/Modal';
 import { Stats } from 'components/Stats';
-import { APP_URL, GAME_NAME } from 'constants';
+import { GAME_NAME } from 'constants';
 import { useGame } from 'hooks';
 import React from 'react';
 import {

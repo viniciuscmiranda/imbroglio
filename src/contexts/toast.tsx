@@ -1,5 +1,5 @@
 import { MAX_TOASTS, TOAST_TIMEOUT } from 'constants';
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useState } from 'react';
 
 export type Toast = {
   id?: number;

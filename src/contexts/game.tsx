@@ -3,6 +3,7 @@ import { useData, useToast } from 'hooks';
 import _ from 'lodash';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { Letter, LetterType, Puzzle, Row, SpecialCharactersRow } from 'types';
+import { isMobile } from 'utils';
 
 import { DataContextProps } from './data';
 
@@ -96,22 +97,31 @@ export const GameProvider: React.FC = ({ children }) => {
     [specialCharactersRows, rows],
   );
 
-  const resetGame = useCallback(() => {
-    // setCorrectRows([]);
-    const nextRows: Row[] = [];
-    const nextLetters: Letter[][] = [];
+  const resetGame = useCallback(
+    (clearCorrectRows = false) => {
+      const nextRows: Row[] = [];
+      const nextLetters: Letter[][] = [];
 
-    rows.forEach((row, rowIndex) => {
-      if (correctRows.includes(rowIndex)) nextRows.push(row);
-      else {
-        nextLetters.push(row);
-        nextRows.push([]);
+      rows.forEach((row, rowIndex) => {
+        if (correctRows.includes(rowIndex) && !clearCorrectRows) {
+          nextRows.push(row);
+        } else {
+          nextLetters.push(row);
+          nextRows.push([]);
+        }
+      });
+
+      if (!nextLetters.flat().length && correctRows.length) {
+        resetGame(true);
+        setCorrectRows([]);
+        return;
       }
-    });
 
-    setRows(nextRows);
-    setLetters([...letters, ...nextLetters.flat()]);
-  }, [letters, rows, correctRows]);
+      setRows(nextRows);
+      setLetters((prevLetters) => [...prevLetters, ...nextLetters.flat()]);
+    },
+    [letters, rows, correctRows],
+  );
 
   const shuffleBench = useCallback(() => {
     const nextLetters = _.shuffle(letters);
@@ -141,14 +151,16 @@ export const GameProvider: React.FC = ({ children }) => {
     shareContent.push('Jogue comigo!');
     shareContent.push(APP_URL);
 
-    navigator.clipboard.writeText(shareContent.join('\n')).then(() => {
-      toast('Copiado!');
-    });
-
-    // navigator.share({
-    //   title: GAME_NAME,
-    //   text: shareContent.join('\n'),
-    // });
+    if (isMobile()) {
+      navigator.share({
+        title: GAME_NAME,
+        text: shareContent.join('\n'),
+      });
+    } else {
+      navigator.clipboard.writeText(shareContent.join('\n')).then(() => {
+        toast('Copiado!');
+      });
+    }
   }, [points, correctRows, rows, puzzle]);
 
   // get stored data
