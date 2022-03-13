@@ -30,3 +30,10 @@ export type LetterType = {
   nextRowIndex?: number;
   rowIndex?: number;
 };
+
+export type Stats = {
+  puzzleId: Puzzle['id'];
+  date: Puzzle['date'];
+  points: number;
+  words: string[];
+};

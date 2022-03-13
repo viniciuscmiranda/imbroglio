@@ -27,23 +27,22 @@ export const Instructions: React.FC = () => {
         </List>
       </Section>
 
-      <Section>
-        <SectionTitle>💣 Ações</SectionTitle>
-        <List>
-          <li>
-            <FiRefreshCw /> Devolver letras para a bancada
-          </li>
-          <li>
-            <FiShuffle /> Embaralhar letras da bancada
-          </li>
-          <li>
-            <FiAward /> Minhas estatísticas
-          </li>
-          <li>
-            <FiShare2 /> Compartilhar!
-          </li>
-        </List>
-      </Section>
+      <List>
+        <SectionTitle />
+
+        <li>
+          <FiRefreshCw /> Devolver letras para a bancada
+        </li>
+        <li>
+          <FiShuffle /> Embaralhar letras da bancada
+        </li>
+        <li>
+          <FiAward /> Minhas estatísticas
+        </li>
+        <li>
+          <FiShare2 /> Compartilhar!
+        </li>
+      </List>
     </Container>
   );
 };

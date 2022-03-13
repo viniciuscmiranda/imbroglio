@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiGithub, FiTwitter } from 'react-icons/fi';
+import { FiGithub } from 'react-icons/fi';
 import { SiNotion } from 'react-icons/si';
 import { Section, SectionTitle } from 'styles/components';
 
@@ -32,31 +32,11 @@ const SocialSection: React.FC = () => {
           </SocialButton>
 
           <SocialButton
-            variant="twitter"
-            target="_blank"
-            href="https://twitter.com/_seis66"
-          >
-            <FiTwitter />
-            Vini
-          </SocialButton>
-        </SocialContainer>
-
-        <SocialContainer>
-          <SocialButton
             variant="github"
             target="_blank"
             href="https://github.com/joaolucas26"
           >
             <FiGithub />
-            João Lucas
-          </SocialButton>
-
-          <SocialButton
-            variant="twitter"
-            target="_blank"
-            href="https://twitter.com/JaozinBaterista"
-          >
-            <FiTwitter />
             João Lucas
           </SocialButton>
         </SocialContainer>

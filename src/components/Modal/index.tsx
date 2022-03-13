@@ -16,9 +16,10 @@ import {
 type ModalProps = {
   open?: boolean;
   title?: string;
+  startOpen?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
-  trigger: React.ReactElement;
+  trigger?: React.ReactElement;
 };
 
 export const Modal: React.FC<ModalProps> = ({
@@ -27,6 +28,7 @@ export const Modal: React.FC<ModalProps> = ({
   open: propsOpen,
   onOpen,
   onClose,
+  startOpen = false,
   trigger,
 }) => {
   const [open, setOpen] = useState<ModalProps['open']>();
@@ -34,6 +36,10 @@ export const Modal: React.FC<ModalProps> = ({
   useEffect(() => {
     setOpen(propsOpen);
   }, [propsOpen]);
+
+  useEffect(() => {
+    setOpen(startOpen);
+  }, [startOpen]);
 
   useEffect(() => {
     if (open === undefined) return;
@@ -45,10 +51,10 @@ export const Modal: React.FC<ModalProps> = ({
     <>
       <TriggerContainer onClick={() => setOpen(!open)}>{trigger}</TriggerContainer>
 
-      <Overlay onClick={() => setOpen(false)} open={open} />
+      <Overlay onClick={() => setOpen(false)} open={propsOpen || open} />
 
       <Container>
-        <Content open={open}>
+        <Content open={propsOpen || open}>
           <Header>
             <ModalTitle>{title}</ModalTitle>
 

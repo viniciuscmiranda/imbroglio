@@ -2,7 +2,7 @@ import { APP_URL, GAME_NAME, ROWS_AMOUNT } from 'constants';
 import { useData, useToast } from 'hooks';
 import _ from 'lodash';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
-import { Letter, LetterType, Puzzle, Row, SpecialCharactersRow } from 'types';
+import { Letter, LetterType, Puzzle, Row, SpecialCharactersRow, Stats } from 'types';
 import { isMobile } from 'utils';
 
 import { DataContextProps } from './data';
@@ -12,18 +12,20 @@ export type GameContextProps = {
   letters: Letter[];
   correctRows: number[];
   specialCharactersRows: SpecialCharactersRow[];
+  stats: Stats[];
   dropLetter: (letter: LetterType) => void;
   getSpecialCharactersRow: (row: Row, rowIndex: number) => Row;
   resetGame: () => void;
   shuffleBench: () => void;
   share: () => void;
+  victory: boolean;
   lastSolution: DataContextProps['lastSolution'];
   puzzleId: Puzzle['id'];
   points: number;
 };
 
 const LOCAL_ROW_KEY = 'ROWS';
-const LOCAL_WINS_KEY = 'WINS';
+const LOCAL_STATS_KEY = 'STATS';
 
 export const GameContext = createContext({} as GameContextProps);
 
@@ -33,6 +35,7 @@ export const GameProvider: React.FC = ({ children }) => {
 
   const initialRows = Array.from({ length: ROWS_AMOUNT }).map(() => []);
 
+  const [victory, setVictory] = useState<GameContextProps['victory']>(false);
   const [rows, setRows] = useState<GameContextProps['rows']>(initialRows);
   const [letters, setLetters] = useState<GameContextProps['letters']>(initialLetters);
   const [correctRows, setCorrectRows] = useState<GameContextProps['correctRows']>([]);
@@ -41,14 +44,9 @@ export const GameProvider: React.FC = ({ children }) => {
   >([]);
 
   const [points, setPoints] = useState<GameContextProps['points']>(0);
-  const [wins, setWins] = useState<number[]>(
-    JSON.parse(localStorage.getItem(LOCAL_WINS_KEY) || '[]'),
+  const [stats, setStats] = useState<GameContextProps['stats']>(
+    JSON.parse(localStorage.getItem(LOCAL_STATS_KEY) || '[]'),
   );
-
-  const win = useCallback(() => {
-    alert('Ganhastes 🎉');
-    setWins((prevWins) => [...prevWins, puzzle.id]);
-  }, [wins]);
 
   const dropLetter = useCallback(
     ({ letter, nextRowIndex, nextIndex, index, rowIndex }: LetterType) => {
@@ -158,10 +156,44 @@ export const GameProvider: React.FC = ({ children }) => {
       });
     } else {
       navigator.clipboard.writeText(shareContent.join('\n')).then(() => {
-        toast('Copiado!');
+        toast('Copiado!', 'share');
       });
     }
   }, [points, correctRows, rows, puzzle]);
+
+  function win() {
+    const storedVictory = stats.find(({ puzzleId }) => puzzleId === puzzle.id);
+    const showVictory = storedVictory ? storedVictory.points < points : true;
+
+    if (showVictory) {
+      const statsData: Stats = {
+        puzzleId: puzzle.id,
+        date: puzzle.date,
+        points: points,
+        words: specialCharactersRows.map((row) => {
+          const word = row.letters.join('');
+          return word[0].toUpperCase() + word.substring(1);
+        }),
+      };
+
+      if (!storedVictory) {
+        setVictory(true);
+        toast('Vitória!');
+      } else {
+        toast('Novo record diário!');
+      }
+
+      setStats((prevStats) => {
+        const nextStats = [
+          ...prevStats.filter(({ puzzleId }) => puzzleId !== puzzle.id),
+          statsData,
+        ];
+
+        localStorage.setItem(LOCAL_STATS_KEY, JSON.stringify(nextStats));
+        return nextStats;
+      });
+    }
+  }
 
   // get stored data
   useEffect(() => {
@@ -221,10 +253,9 @@ export const GameProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const allRowsCorrect = correctRows.length === rows.filter((row) => row.length).length;
     const noLettersInBench = letters.length === 0;
-    const firstWin = !wins.includes(puzzle.id);
 
-    if (allRowsCorrect && noLettersInBench && firstWin) win();
-  }, [correctRows]);
+    if (allRowsCorrect && noLettersInBench) win();
+  }, [points]);
 
   // set points
   useEffect(() => {
@@ -232,13 +263,8 @@ export const GameProvider: React.FC = ({ children }) => {
       if (!correctRows.includes(rowIndex)) return acc;
       return acc + row.length * row.length;
     }, 0);
-
     setPoints(nextPoints);
   }, [rows, correctRows]);
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_WINS_KEY, JSON.stringify(wins));
-  }, [wins]);
 
   return (
     <GameContext.Provider
@@ -249,7 +275,9 @@ export const GameProvider: React.FC = ({ children }) => {
         specialCharactersRows,
         puzzleId: puzzle.id,
         points,
+        stats,
         lastSolution,
+        victory,
         dropLetter,
         getSpecialCharactersRow,
         resetGame,

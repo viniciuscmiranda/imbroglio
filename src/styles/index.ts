@@ -37,8 +37,8 @@ export const { globalCss, styled, keyframes } = createStitches({
     sizes: {
       letterSize: '4rem',
       letterSpacing: '.5rem',
-      rowWidth: `calc(($letterSize * ${LETTERS_PER_ROW}) + ($letterSpacing * ${
-        LETTERS_PER_ROW + 2
+      rowWidth: `calc(($sizes$letterSize * ${LETTERS_PER_ROW}) + ($sizes$letterSpacing * ${
+        LETTERS_PER_ROW + 6
       }))`,
     },
 
