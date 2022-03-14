@@ -182,8 +182,22 @@ export const GameProvider: React.FC = ({ children }) => {
       if (!storedVictory) {
         setVictory(true);
         toast('Vitória!');
+
+        TagManager.dataLayer({
+          dataLayer: {
+            event: 'win',
+            stats: statsData,
+          },
+        });
       } else {
         toast('Novo record diário!');
+
+        TagManager.dataLayer({
+          dataLayer: {
+            event: 'record',
+            stats: statsData,
+          },
+        });
       }
 
       setStats((prevStats) => {
