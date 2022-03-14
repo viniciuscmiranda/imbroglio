@@ -58,7 +58,7 @@ export const Modal: React.FC<ModalProps> = ({
           <Header>
             <ModalTitle>{title}</ModalTitle>
 
-            <Button variant="ghost" onClick={() => setOpen(false)}>
+            <Button variant="ghost" aria-label="Fechar" onClick={() => setOpen(false)}>
               <FiX size="1.35rem" />
             </Button>
           </Header>

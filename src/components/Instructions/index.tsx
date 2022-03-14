@@ -14,14 +14,18 @@ export const Instructions: React.FC = () => {
 
         <List>
           <li>Segure e arraste as letras da bancada para as linhas</li>
-          <Image>
-            <img src={dragLetter} alt="Arrastando letra" />
-          </Image>
+          <li>
+            <Image>
+              <img src={dragLetter} alt="Arrastando letra" />
+            </Image>
+          </li>
           <li>Forme até 3 palavras usando as letras disponíveis</li>
           <li>Quanto maiores as palavras formadas, mais pontos você ganha</li>
-          <Image>
-            <img src={wordCompleted} alt="Palavra formada" />
-          </Image>
+          <li>
+            <Image>
+              <img src={wordCompleted} alt="Palavra formada" />
+            </Image>
+          </li>
           <li>Volte todos os dias para um novo desafio</li>
           <li>E não se esqueça de compartilhar!</li>
         </List>

@@ -6,9 +6,15 @@ import { ToastProvider } from 'contexts/toast';
 import React from 'react';
 import TagManager from 'react-gtm-module';
 import { global } from 'styles';
+import { useRegisterSW } from 'virtual:pwa-register/react';
 
 export const App: React.FC = () => {
   global();
+
+  // PWA
+  useRegisterSW({
+    onRegistered: (r) => r && setInterval(() => r.update(), 60 * 60 * 1000),
+  });
 
   React.useEffect(() => {
     TagManager.initialize({
@@ -17,7 +23,11 @@ export const App: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    if (import.meta.env.PROD && window.location?.protocol !== 'https:') {
+    if (
+      import.meta.env.PROD &&
+      window.location.hostname !== 'localhost' &&
+      window.location?.protocol !== 'https:'
+    ) {
       window.location.protocol = 'https:';
     }
   }, []);
