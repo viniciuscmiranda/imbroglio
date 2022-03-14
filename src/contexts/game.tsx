@@ -181,7 +181,7 @@ export const GameProvider: React.FC = ({ children }) => {
 
       const dataLayer = {
         points,
-        words: words.join(', '),
+        words: statsData.words.join(', '),
         puzzleId: puzzle.id,
       };
 
