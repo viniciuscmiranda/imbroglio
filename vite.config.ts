@@ -1,13 +1,20 @@
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import { defineConfig } from 'vite';
+import { createHtmlPlugin } from 'vite-plugin-html';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     reactRefresh(),
     tsconfigPaths(),
+    createHtmlPlugin({
+      inject: {
+        data: {
+          APP_URL: 'https://imbrogliogame.com.br',
+        },
+      },
+    }),
     VitePWA({
       includeAssets: ['favicon.ico', 'robots.txt', 'banner.png', 'apple-touch-icon.png'],
       registerType: 'autoUpdate',
