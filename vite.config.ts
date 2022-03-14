@@ -16,13 +16,24 @@ export default defineConfig({
       },
     }),
     VitePWA({
-      includeAssets: ['favicon.ico', 'robots.txt', 'banner.png', 'apple-touch-icon.png'],
+      includeAssets: [
+        'favicon.ico',
+        'robots.txt',
+        'banner.png',
+        'apple-touch-icon.png',
+        'splash/*',
+      ],
       registerType: 'autoUpdate',
       manifest: {
         name: 'imbróglio',
         short_name: 'imbróglio',
         description: 'Forme palavras e faça o máximo de pontos que puder!',
         theme_color: '#3B88C3',
+        background_color: '#F2CD5D',
+        scope: '/',
+        start_url: '/',
+        display: 'fullscreen',
+        orientation: 'portrait',
         icons: [
           {
             src: 'pwa-192x192.png',

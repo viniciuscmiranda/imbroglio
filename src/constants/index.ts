@@ -8,3 +8,5 @@ export const GAME_NAME = 'imbróglio';
 export const APP_URL = window.location.href;
 export const TOAST_TIMEOUT = 4000;
 export const MAX_TOASTS = 5;
+export const PIX_KEY = '770de3f4-f68f-477b-87fd-4be706de2ecd';
+export const PIX_URL = 'https://nubank.com.br/pagar/1lc8w3/YwYDNRYaeN';
