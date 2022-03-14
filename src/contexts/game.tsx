@@ -179,6 +179,12 @@ export const GameProvider: React.FC = ({ children }) => {
         }),
       };
 
+      const dataLayer = {
+        points,
+        words: words.join(', '),
+        puzzleId: puzzle.id,
+      };
+
       if (!storedVictory) {
         setVictory(true);
         toast('Vitória!');
@@ -186,7 +192,7 @@ export const GameProvider: React.FC = ({ children }) => {
         TagManager.dataLayer({
           dataLayer: {
             event: 'win',
-            stats: statsData,
+            ...dataLayer,
           },
         });
       } else {
@@ -195,7 +201,7 @@ export const GameProvider: React.FC = ({ children }) => {
         TagManager.dataLayer({
           dataLayer: {
             event: 'record',
-            stats: statsData,
+            ...dataLayer,
           },
         });
       }
