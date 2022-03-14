@@ -1,7 +1,9 @@
 import { APP_URL, GAME_NAME, ROWS_AMOUNT } from 'constants';
 import { useData, useToast } from 'hooks';
 import _ from 'lodash';
+import moment from 'moment';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
+import TagManager from 'react-gtm-module';
 import { Letter, LetterType, Puzzle, Row, SpecialCharactersRow, Stats } from 'types';
 import { isMobile } from 'utils';
 
@@ -26,6 +28,7 @@ export type GameContextProps = {
 
 const LOCAL_ROW_KEY = 'ROWS';
 const LOCAL_STATS_KEY = 'STATS';
+const LOCAL_WORDS_KEY = 'WORDS';
 
 export const GameContext = createContext({} as GameContextProps);
 
@@ -127,10 +130,10 @@ export const GameProvider: React.FC = ({ children }) => {
   }, [letters]);
 
   const share = useCallback(() => {
-    const unusedLetters = rows.reduce((acc, row, rowIndex) => {
-      if (correctRows.includes(rowIndex)) return acc;
-      else return acc + row.length;
-    }, letters.length);
+    // const unusedLetters = rows.reduce((acc, row, rowIndex) => {
+    //   if (correctRows.includes(rowIndex)) return acc;
+    //   else return acc + row.length;
+    // }, letters.length);
 
     const correctRowsContent: string[] = [];
     rows.forEach((row, rowIndex) => {
@@ -141,8 +144,8 @@ export const GameProvider: React.FC = ({ children }) => {
 
     const shareContent: string[] | string = [];
 
-    shareContent.push(`🔡 ${GAME_NAME}#${puzzle.id}`);
-    shareContent.push(`🟦 ${unusedLetters} letras não usadas`);
+    shareContent.push(`🔡 ${GAME_NAME}# ${puzzle.id}`);
+    // shareContent.push(`🟦 ${unusedLetters} letras não usadas`);
     shareContent.push(``);
     shareContent.push(`⭐ ${points} pontos`);
     shareContent.push(correctRowsContent.join(''));
@@ -229,7 +232,7 @@ export const GameProvider: React.FC = ({ children }) => {
   // check words
   useEffect(() => {
     const nextCorrectRows: number[] = [];
-    const nextInitialRows: SpecialCharactersRow[] = [];
+    const nextSpecialCharactersRows: SpecialCharactersRow[] = [];
 
     rows.forEach((row, rowIndex) => {
       const word = row.map((letter) => letter.content).join('');
@@ -237,16 +240,41 @@ export const GameProvider: React.FC = ({ children }) => {
 
       if (foundWord) {
         nextCorrectRows.push(rowIndex);
-        nextInitialRows.push({
+        nextSpecialCharactersRows.push({
           rowIndex,
           letters: foundWord.word.split(''),
         });
       }
     });
 
-    localStorage.setItem(LOCAL_ROW_KEY, JSON.stringify({ puzzleId: puzzle.id, rows }));
-    setSpecialCharactersRows(nextInitialRows);
+    setSpecialCharactersRows((prevSpecialCharactersRows) => {
+      const prevWords = prevSpecialCharactersRows.map((row) => row.letters.join(''));
+      const nextWords = nextSpecialCharactersRows.map((row) => row.letters.join(''));
+
+      const today = moment().format('YYYY-MM-DD');
+      const storedWords = JSON.parse(
+        localStorage.getItem(`${LOCAL_WORDS_KEY}${today}`) || '[]',
+      );
+
+      nextWords.forEach((word) => {
+        if (!prevWords.includes(word) && !storedWords.includes(word)) {
+          storedWords.push(word);
+
+          TagManager.dataLayer({
+            dataLayer: {
+              event: 'word',
+              word: word[0].toUpperCase() + word.substring(1),
+            },
+          });
+        }
+      });
+
+      localStorage.setItem(`${LOCAL_WORDS_KEY}${today}`, JSON.stringify(storedWords));
+      return nextSpecialCharactersRows;
+    });
+
     setCorrectRows(nextCorrectRows);
+    localStorage.setItem(LOCAL_ROW_KEY, JSON.stringify({ puzzleId: puzzle.id, rows }));
   }, [rows]);
 
   // check win

@@ -45,6 +45,10 @@ export const SocialButton = styled('a', {
     transform: 'scale(1.05)',
   },
 
+  '*': {
+    pointerEvents: 'none',
+  },
+
   variants: {
     variant: {
       github: {

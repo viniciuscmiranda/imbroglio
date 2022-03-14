@@ -33,6 +33,7 @@ export const Actions: React.FC = () => {
         </Button>
 
         <Button
+          data-gtm="Embaralhar letras"
           aria-label="Embaralhar letras"
           title="Embaralhar letras"
           onClick={() => shuffleBench()}
@@ -46,7 +47,7 @@ export const Actions: React.FC = () => {
           onClose={() => setShowStats(false)}
           onOpen={() => setShowStats(true)}
           trigger={
-            <Button aria-label="Minhas estatísticas">
+            <Button data-gtm="Minhas estatísticas" aria-label="Minhas estatísticas">
               <FiAward size={iconSize} />
             </Button>
           }
@@ -54,7 +55,7 @@ export const Actions: React.FC = () => {
           <Stats />
         </Modal>
 
-        <Button aria-label="Compartilhar" onClick={() => share()}>
+        <Button data-gtm="Compartilhar" aria-label="Compartilhar" onClick={() => share()}>
           <FiShare2 size={iconSize} />
         </Button>
 
@@ -65,7 +66,12 @@ export const Actions: React.FC = () => {
         <Modal
           title="Informações"
           trigger={
-            <Button aria-label="Informações" title="Informações" variant="secondary">
+            <Button
+              data-gtm="Informações"
+              aria-label="Informações"
+              title="Informações"
+              variant="secondary"
+            >
               <FiInfo size={iconSize} />
             </Button>
           }
@@ -76,7 +82,12 @@ export const Actions: React.FC = () => {
           title={`Bem-vindo ao ${GAME_NAME}!`}
           startOpen={!stats.length}
           trigger={
-            <Button aria-label="Como jogar" title="Como jogar" variant="secondary">
+            <Button
+              data-gtm="Como jogar"
+              aria-label="Como jogar"
+              title="Como jogar"
+              variant="secondary"
+            >
               <FiHelpCircle size={iconSize} />
             </Button>
           }

@@ -24,6 +24,7 @@ const SocialSection: React.FC = () => {
         <SocialContainer>
           <SocialButton
             variant="github"
+            data-gtm="Github Vini"
             target="_blank"
             href="https://github.com/viniciuscmiranda"
           >
@@ -34,6 +35,7 @@ const SocialSection: React.FC = () => {
           <SocialButton
             variant="github"
             target="_blank"
+            data-gtm="Github João Lucas"
             href="https://github.com/joaolucas26"
           >
             <FiGithub />
@@ -54,6 +56,7 @@ const FilesSection: React.FC = () => {
         <SocialButton
           variant="github"
           target="_blank"
+          data-gtm="Código fonte"
           href="https://github.com/viniciuscmiranda/imbroglio"
         >
           <FiGithub />
@@ -63,6 +66,7 @@ const FilesSection: React.FC = () => {
         <SocialButton
           variant="github"
           target="_blank"
+          data-gtm="Base de dados"
           href="https://github.com/joaolucas26/imbroglio-data"
         >
           <FiGithub />
@@ -72,6 +76,7 @@ const FilesSection: React.FC = () => {
         <SocialButton
           variant="notion"
           target="_blank"
+          data-gtm="Roadmap"
           href="https://www.notion.so/vini6/Imbr-glio-97d3647c55874152b2e506046a877d2d"
         >
           <SiNotion />
@@ -88,7 +93,12 @@ const InspirationsSection: React.FC = () => {
       <SectionTitle>🧡 Inspirações</SectionTitle>
 
       <SocialContainer>
-        <SocialButton variant="termo" target="_blank" href="https://term.ooo/">
+        <SocialButton
+          variant="termo"
+          target="_blank"
+          href="https://term.ooo/"
+          data-gtm="Termo"
+        >
           Termo
         </SocialButton>
 
@@ -96,6 +106,7 @@ const InspirationsSection: React.FC = () => {
           variant="letterjumble"
           target="_blank"
           href="https://letterjumble.com/"
+          data-gtm="Letter Jumble"
         >
           Letter Jumble
         </SocialButton>

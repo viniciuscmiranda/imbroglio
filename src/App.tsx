@@ -4,10 +4,17 @@ import { DataProvider } from 'contexts/data';
 import { GameProvider } from 'contexts/game';
 import { ToastProvider } from 'contexts/toast';
 import React from 'react';
+import TagManager from 'react-gtm-module';
 import { global } from 'styles';
 
 export const App: React.FC = () => {
   global();
+
+  React.useEffect(() => {
+    TagManager.initialize({
+      gtmId: 'GTM-WFWB5GG',
+    });
+  }, []);
 
   React.useEffect(() => {
     if (import.meta.env.PROD && window.location?.protocol !== 'https:') {

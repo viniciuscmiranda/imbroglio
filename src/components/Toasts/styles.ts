@@ -11,6 +11,7 @@ export const Container = styled('div', {
 
   gap: '$0',
   padding: '$0',
+  paddingBottom: '2.5rem',
 });
 
 const toastEnter = keyframes({
@@ -57,7 +58,9 @@ export const Toast = styled('div', {
   justifyContent: 'center',
   gap: '$0',
   borderRadius: '$1',
-  animation: `${toastEnter} .2s ease`,
+  transformOrigin: '50% 50%',
+
+  animation: `${toastEnter} .15s ease`,
 
   '& > p': {
     fontWeight: 'bold',
@@ -66,7 +69,7 @@ export const Toast = styled('div', {
   variants: {
     exiting: {
       true: {
-        animation: `${toastExit} .2s ease`,
+        animation: `${toastExit} .15s ease`,
         opacity: '0',
         transform: 'scale(.6)',
         height: '0',

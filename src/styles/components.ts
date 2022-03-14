@@ -45,6 +45,10 @@ export const Button = styled('button', {
     borderColor: '$darkGray',
   },
 
+  '*': {
+    pointerEvents: 'none',
+  },
+
   variants: {
     variant: {
       secondary: {
