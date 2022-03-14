@@ -64,15 +64,15 @@ export const global = globalCss({
     fontFamily: "'Quicksand', sans-serif",
 
     '@media (max-width: 640px)': {
-      fontSize: '12px',
-    },
-
-    '@media (max-width: 400px)': {
       fontSize: '10px',
     },
 
+    '@media (max-width: 400px)': {
+      fontSize: '9px',
+    },
+
     '@media (max-width: 300px)': {
-      fontSize: '8px',
+      fontSize: '7px',
     },
   },
 

@@ -9,7 +9,7 @@ export default defineConfig({
     reactRefresh(),
     tsconfigPaths(),
     VitePWA({
-      includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.ico', 'robots.txt', 'banner.png', 'apple-touch-icon.png'],
       registerType: 'autoUpdate',
       manifest: {
         name: 'imbróglio',

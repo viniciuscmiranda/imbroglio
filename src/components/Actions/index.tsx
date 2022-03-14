@@ -2,11 +2,13 @@ import { Infos } from 'components/Infos';
 import { Instructions } from 'components/Instructions';
 import { Modal } from 'components/Modal';
 import { Stats } from 'components/Stats';
+import { Support } from 'components/Support';
 import { GAME_NAME } from 'constants';
 import { useGame } from 'hooks';
 import React, { useEffect, useState } from 'react';
 import {
   FiAward,
+  FiCoffee,
   FiHelpCircle,
   FiInfo,
   FiRefreshCw,
@@ -63,6 +65,22 @@ export const Actions: React.FC = () => {
       </div>
 
       <div>
+        <Modal
+          title="Apoiar"
+          trigger={
+            <Button
+              data-gtm="Apoiar"
+              arial-label="Apoiar"
+              title="Apoiar"
+              variant="secondary"
+            >
+              <FiCoffee size={iconSize} />
+            </Button>
+          }
+        >
+          <Support />
+        </Modal>
+
         <Modal
           title="Informações"
           trigger={
