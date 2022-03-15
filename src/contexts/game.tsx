@@ -161,10 +161,13 @@ export const GameProvider: React.FC = ({ children }) => {
       } else {
         throw new Error('Not mobile');
       }
-    } catch {
-      navigator.clipboard.writeText(shareContent.join('\n')).then(() => {
-        toast('Copiado!', 'share');
-      });
+    } catch (err) {
+      navigator.clipboard
+        .writeText(shareContent.join('\n'))
+        .then(() => {
+          toast('Copiado!', 'share');
+        })
+        .catch(() => toast('Erro ao compartilhar :(', 'share'));
     }
   }, [points, correctRows, rows, puzzle]);
 

@@ -2,8 +2,6 @@
 
 ## Como jogar
 
----
-
 Segure e arraste as letras da bancada para o quadro
 
 <img src="./src/assets/images/drag-letter.png" alt="Arrastar letra" width="500"/>
@@ -22,16 +20,12 @@ E não se esqueça de compartilhar!
 
 ## 🚀 Criadores
 
----
-
 [![Código fonte](https://img.shields.io/badge/Vini-black?style=for-the-badge&logo=github)](https://github.com/viniciuscmiranda)
 [![Base de dados](https://img.shields.io/badge/João%20Lucas-black?style=for-the-badge&logo=github)](https://github.com/joaolucas26)
 
 <br />
 
 ## 📂 Arquivos
-
----
 
 [![Código fonte](https://img.shields.io/badge/Código%20fonte-black?style=for-the-badge&logo=github)](https://github.com/viniciuscmiranda/imbroglio)
 [![Base de dados](https://img.shields.io/badge/Base%20de%20dados-black?style=for-the-badge&logo=github)](https://github.com/joaolucas26/imbroglio-data)
@@ -40,8 +34,6 @@ E não se esqueça de compartilhar!
 <br />
 
 ## 🧡 Inspirações
-
----
 
 [![Termo](https://img.shields.io/badge/Termo-504a4b?style=for-the-badge)](https://term.ooo)
 [![Letter Jumble](https://img.shields.io/badge/Letter%20Jumble-4CAF50?style=for-the-badge)](https://letterjumble.com/)
