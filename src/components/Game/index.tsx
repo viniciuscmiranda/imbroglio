@@ -27,7 +27,21 @@ export const Game: React.FC = () => {
   } = useGame();
 
   function onDragEnd(result: DropResult) {
-    if (!result.destination) return;
+    if (!result.destination) {
+      if (!result.source.droppableId.includes(UNUSED_DROPPABLE_ID)) {
+        const prevRowIndex = Number(result.source.droppableId);
+        const prevIndex = Number(result.source.index);
+
+        dropLetter({
+          letter: rows[prevRowIndex][prevIndex],
+          index: prevIndex,
+          rowIndex: prevRowIndex,
+          nextIndex: letters.length,
+        });
+      }
+
+      return;
+    }
 
     const prevIndex = result.source.index;
     const nextIndex = result.destination.index;
