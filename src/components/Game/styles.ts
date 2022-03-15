@@ -10,10 +10,6 @@ export const GameContainer = styled('div', {
   justifyContent: 'center',
   userSelect: 'none',
   gap: '1em',
-
-  '@media (max-width: 800px)': {
-    paddingBottom: '3rem',
-  },
 });
 
 export const RowsContainer = styled('div', {

@@ -1,15 +1,15 @@
 import { styled } from 'styles';
 
 export const Container = styled('div', {
-  marginBottom: '1rem',
   display: 'flex',
   alignItems: 'center',
   gap: '.5rem',
   backgroundColor: '$blue',
   borderRadius: '$1',
-  padding: '.5rem 1rem',
-  paddingLeft: '.75rem',
+  padding: '.25rem .5rem',
+  paddingLeft: '.25rem',
   border: '.2rem solid $darkBlue',
+  marginBottom: '1rem',
 
   '& > img': {
     width: '2rem',

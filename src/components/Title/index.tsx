@@ -9,7 +9,7 @@ export const Title: React.FC = () => {
   const { puzzleId } = useGame();
 
   return (
-    <Container>
+    <Container data-gtm="Logo">
       <img src={Logo} alt="" />
       <GameTitle>
         {GAME_NAME}
