@@ -6,7 +6,7 @@ export const SectionTitle = styled('h3', {
   fontSize: '1.25em',
   marginBottom: '.75em',
   display: 'block',
-  color: '$orange',
+  color: '$text',
 
   '&::after': {
     content: '',
@@ -15,7 +15,7 @@ export const SectionTitle = styled('h3', {
     marginTop: '$0',
     width: '100%',
     borderRadius: '$1',
-    backgroundColor: '$orange',
+    backgroundColor: '$text',
   },
 });
 
@@ -59,8 +59,8 @@ export const Button = styled('button', {
 
       ghost: {
         background: 'none',
-        borderColor: '$orange',
-        color: '$orange',
+        borderColor: '$text',
+        color: '$text',
       },
     },
   },

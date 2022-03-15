@@ -1,5 +1,4 @@
 import { Game } from 'components/Game';
-import { Toasts } from 'components/Toasts';
 import { DataProvider } from 'contexts/data';
 import { GameProvider } from 'contexts/game';
 import { ToastProvider } from 'contexts/toast';
@@ -39,8 +38,6 @@ export const App: React.FC = () => {
           <Game />
         </GameProvider>
       </DataProvider>
-
-      <Toasts />
     </ToastProvider>
   );
 };

@@ -5,26 +5,20 @@ import { LETTERS_PER_ROW } from 'constants';
 export const { globalCss, styled, keyframes } = createStitches({
   theme: {
     colors: {
-      blue: '#3B88C3',
-      darkBlue: '#2a72a8',
-      darkerBlue: '#195785',
+      blue: '#3177ad',
+      darkBlue: '#24689c',
       yellow: '#F2CD5D',
       orange: '#cc963f',
       darkOrange: '#b5812f',
+      text: '$orange',
       green: '#169873',
       darkGreen: '#0c7d5d',
       white: '#fff',
       gray: '#aaa',
       darkGray: '#888',
-      lightGray: '#e5e5e5',
-      lighterGray: '#f1f1f1',
       overlay: 'rgba(0,0,0,.3)',
-
-      stroke: '$lightGray',
+      stroke: '#e5e5e5',
       background: '$yellow',
-
-      text: '#000',
-      textLight: '#fff',
     },
 
     fontSizes: {
@@ -50,6 +44,11 @@ export const { globalCss, styled, keyframes } = createStitches({
 
     radii: {
       1: '.5rem',
+    },
+
+    zIndices: {
+      toast: 11,
+      modal: 10,
     },
   },
 });

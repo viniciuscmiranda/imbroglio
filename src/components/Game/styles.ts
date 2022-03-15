@@ -71,6 +71,7 @@ export const LetterContainer = styled('span', {
 });
 
 export const BenchContainer = styled('div', {
+  position: 'relative',
   minWidth: `calc(${UNUSED_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
     UNUSED_ROW_LENGTH + 1
   }))`,

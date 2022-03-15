@@ -1,4 +1,4 @@
-import Logo from 'assets/images/logo.png';
+import Logo from 'assets/images/logo.svg';
 import { GAME_NAME } from 'constants';
 import { useGame } from 'hooks';
 import React from 'react';

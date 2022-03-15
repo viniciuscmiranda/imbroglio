@@ -7,7 +7,6 @@ export const Container = styled('div', {
   backgroundColor: '$blue',
   borderRadius: '$1',
   padding: '.25rem .5rem',
-  paddingLeft: '.25rem',
   border: '.2rem solid $darkBlue',
   marginBottom: '1rem',
 

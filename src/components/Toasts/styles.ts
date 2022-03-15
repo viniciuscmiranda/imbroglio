@@ -1,24 +1,23 @@
 import { keyframes, styled } from 'styles';
 
 export const Container = styled('div', {
-  position: 'fixed',
-  inset: 0,
+  position: 'absolute',
   display: 'flex',
   pointerEvents: 'none',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'flex-end',
-
+  inset: 0,
   gap: '$0',
   padding: '$0',
-  paddingBottom: '2.5rem',
+  transform: 'translateY(1rem)',
+  zIndex: '$toast',
 });
 
 const toastEnter = keyframes({
   '0%': {
     opacity: '0',
     transform: 'scale(.6)',
-    height: '0',
   },
 
   '60%': {
@@ -28,7 +27,6 @@ const toastEnter = keyframes({
   '100%': {
     opacity: '1',
     transform: 'scale(1)',
-    height: '4rem',
   },
 });
 
@@ -36,13 +34,11 @@ const toastExit = keyframes({
   '0%': {
     opacity: '1',
     transform: 'scale(1)',
-    height: '4rem',
   },
 
   '100%': {
     opacity: '0',
     transform: 'scale(.6)',
-    height: '0',
   },
 });
 
@@ -70,9 +66,8 @@ export const Toast = styled('div', {
     exiting: {
       true: {
         animation: `${toastExit} .15s ease`,
-        opacity: '0',
         transform: 'scale(.6)',
-        height: '0',
+        opacity: '0',
       },
     },
   },

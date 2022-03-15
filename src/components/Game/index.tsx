@@ -1,5 +1,6 @@
 import { Actions } from 'components/Actions';
 import { Title } from 'components/Title';
+import { Toasts } from 'components/Toasts';
 import { MAX_LETTERS, UNUSED_DROPPABLE_ID, UNUSED_ROW_LENGTH } from 'constants';
 import { useGame } from 'hooks';
 import React from 'react';
@@ -171,6 +172,8 @@ export const Game: React.FC = () => {
               </Droppable>
             ),
           )}
+
+          <Toasts />
         </BenchContainer>
       </DragDropContext>
     </GameContainer>

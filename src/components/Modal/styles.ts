@@ -10,6 +10,7 @@ export const Overlay = styled('div', {
   opacity: 0,
   pointerEvents: 'none',
   transition: 'opacity .2s ease',
+  zIndex: '$modal',
 
   variants: {
     open: {
@@ -28,6 +29,7 @@ export const Container = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  zIndex: '$modal',
 });
 
 export const Content = styled('div', {
@@ -36,7 +38,7 @@ export const Content = styled('div', {
   backgroundColor: '$white',
   width: '40rem',
   borderRadius: '$1',
-  border: '.2rem solid $orange',
+  border: '.2rem solid $text',
 
   pointerEvents: 'none',
   opacity: 0,
@@ -71,7 +73,7 @@ export const Header = styled('div', {
 });
 
 export const ModalTitle = styled('h2', {
-  color: '$orange',
+  color: '$text',
   fontSize: '$large',
   fontWeight: 'bold',
 });

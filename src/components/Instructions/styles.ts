@@ -13,7 +13,7 @@ export const List = styled('ul', {
     display: 'flex',
     alignItems: 'center',
     gap: '$0',
-    color: '$orange',
+    color: '$text',
     fontWeight: 'bold',
 
     '&:not(:last-child)': {
@@ -28,6 +28,7 @@ export const Image = styled('figure', {
   borderRadius: '$1',
   overflow: 'hidden',
   marginBottom: '$1',
+  border: '.2rem solid $text',
 
   '& > img': {
     width: '100%',
