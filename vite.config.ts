@@ -16,13 +16,7 @@ export default defineConfig({
       },
     }),
     VitePWA({
-      includeAssets: [
-        'favicon.ico',
-        'robots.txt',
-        'banner.png',
-        'apple-touch-icon.png',
-        'splash/*',
-      ],
+      includeAssets: ['*'],
       registerType: 'autoUpdate',
       manifest: {
         name: 'imbróglio',
