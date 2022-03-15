@@ -1,4 +1,5 @@
 import { createStitches } from '@stitches/react';
+import bg from 'assets/images/bg.png';
 import { LETTERS_PER_ROW } from 'constants';
 
 // configurações de estilo (css)
@@ -10,7 +11,7 @@ export const { globalCss, styled, keyframes } = createStitches({
       yellow: '#F2CD5D',
       orange: '#cc963f',
       darkOrange: '#b5812f',
-      text: '$orange',
+      text: '$darkOrange',
       green: '#169873',
       darkGreen: '#0c7d5d',
       white: '#fff',
@@ -85,16 +86,15 @@ export const global = globalCss({
 
   '#root': {
     height: '100vh',
-    width: '100vw',
+    width: '100%',
   },
 
   body: {
     backgroundColor: '$background',
     color: '$text',
     backgroundImage: `url(${bg})`,
+    backgroundBlendMode: 'multiply',
     backgroundSize: '20rem',
     fontSize: '$normal',
   },
 });
-
-import bg from 'assets/images/bg.png';

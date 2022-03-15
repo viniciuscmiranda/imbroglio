@@ -4,18 +4,18 @@ export const Section = styled('div');
 
 export const SectionTitle = styled('h3', {
   fontSize: '1.25em',
-  marginBottom: '.75em',
+  marginBottom: '$1',
   display: 'block',
   color: '$text',
 
   '&::after': {
     content: '',
     display: 'block',
-    height: '.2rem',
+    height: '.15em',
     marginTop: '$0',
     width: '100%',
     borderRadius: '$1',
-    backgroundColor: '$text',
+    backgroundColor: '$orange',
   },
 });
 

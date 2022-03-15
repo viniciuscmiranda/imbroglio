@@ -4,13 +4,13 @@
 
 Segure e arraste as letras da bancada para o quadro
 
-<img src="./src/assets/images/drag-letter.png" alt="Arrastar letra" width="500"/>
+<img src="./src/assets/images/drag.gif" alt="Arrastar letra" width="500"/>
 
 Forme até 3 palavras usando as letras disponíveis
 
 Quanto maiores as palavras formadas, mais pontos você ganha
 
-<img src="./src/assets/images/word-completed.png" alt="Formar palavra" width="500"/>
+<img src="./src/assets/images/word.gif" alt="Formar palavra" width="500"/>
 
 Volte todos os dias para um novo desafio
 

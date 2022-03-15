@@ -1,5 +1,5 @@
-import dragLetter from 'assets/images/drag-letter.png';
-import wordCompleted from 'assets/images/word-completed.png';
+import drag from 'assets/images/drag.gif';
+import word from 'assets/images/word.gif';
 import React from 'react';
 import { FiAward, FiRefreshCw, FiShare2, FiShuffle } from 'react-icons/fi';
 import { Section, SectionTitle } from 'styles/components';
@@ -16,14 +16,14 @@ export const Instructions: React.FC = () => {
           <li>Segure e arraste as letras da bancada para o quadro</li>
           <li>
             <Image>
-              <img src={dragLetter} alt="Arrastando letra" />
+              <img src={drag} alt="Arrastando letra" />
             </Image>
           </li>
           <li>Forme até 3 palavras usando as letras disponíveis</li>
           <li>Quanto maiores as palavras formadas, mais pontos você ganha</li>
           <li>
             <Image>
-              <img src={wordCompleted} alt="Palavra formada" />
+              <img src={word} alt="Palavra formada" />
             </Image>
           </li>
           <li>Volte todos os dias para um novo desafio</li>

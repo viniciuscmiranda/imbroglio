@@ -2,7 +2,7 @@ import { MAX_LETTERS, ROWS_AMOUNT, UNUSED_ROW_LENGTH } from 'constants';
 import { styled } from 'styles';
 
 export const GameContainer = styled('div', {
-  width: '100vw',
+  width: '100%',
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',

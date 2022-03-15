@@ -23,11 +23,12 @@ export const List = styled('ul', {
 });
 
 export const Image = styled('figure', {
-  width: '18rem',
-  height: '9rem',
+  width: '16rem',
+  height: '11rem',
   borderRadius: '$1',
   overflow: 'hidden',
   marginBottom: '$1',
+  backgroundColor: '$background',
   border: '.2rem solid $text',
 
   '& > img': {
