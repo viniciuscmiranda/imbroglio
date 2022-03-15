@@ -32,7 +32,6 @@ export const Container = styled('div', {
 
 export const Content = styled('div', {
   '--header-height': '5rem',
-  '--max-height': 'calc(80vh - var(--header-height))',
 
   backgroundColor: '$white',
   width: '40rem',
@@ -45,9 +44,8 @@ export const Content = styled('div', {
   transform: 'translateY(30%) scale(.4)',
   visibility: 'hidden',
 
-  '@media (max-width: 40rem)': {
+  '@media (max-width: 800px)': {
     width: 'calc(100% - 3rem)',
-    maxHeight: 'calc(100% - 3rem)',
     '*': { fontSize: '1.3rem' },
   },
 

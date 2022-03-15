@@ -63,16 +63,20 @@ export const global = globalCss({
     fontSize: '16px',
     fontFamily: "'Quicksand', sans-serif",
 
+    '@media (max-width: 920px)': {
+      fontSize: '20px',
+    },
+
     '@media (max-width: 640px)': {
+      fontSize: '14px',
+    },
+
+    '@media (max-width: 500px)': {
       fontSize: '10px',
     },
 
-    '@media (max-width: 400px)': {
+    '@media (max-width: 370px)': {
       fontSize: '9px',
-    },
-
-    '@media (max-width: 300px)': {
-      fontSize: '7px',
     },
   },
 
