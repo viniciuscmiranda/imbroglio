@@ -16,14 +16,17 @@ export default defineConfig({
       },
     }),
     VitePWA({
+      registerType: 'autoUpdate',
       includeAssets: ['*'],
       manifest: {
+        lang: 'pt-BR',
         name: 'imbróglio',
         short_name: 'imbróglio',
         description: 'Forme palavras e faça o máximo de pontos que puder!',
         theme_color: '#3177ad',
         background_color: '#F2CD5D',
         start_url: '/',
+        scope: '/',
         display: 'fullscreen',
         orientation: 'portrait',
         icons: [
