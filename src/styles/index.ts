@@ -60,7 +60,7 @@ export const global = globalCss({
     padding: 0,
     margin: 0,
     boxSizing: 'border-box',
-    fontSize: '16px',
+    fontSize: '15px',
     fontFamily: "'Quicksand', sans-serif",
 
     '@media (max-width: 1380px)': {
@@ -92,6 +92,10 @@ export const global = globalCss({
   body: {
     backgroundColor: '$background',
     color: '$text',
+    backgroundImage: `url(${bg})`,
+    backgroundSize: '20rem',
     fontSize: '$normal',
   },
 });
+
+import bg from 'assets/images/bg.png';
