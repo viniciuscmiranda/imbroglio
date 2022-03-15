@@ -65,7 +65,6 @@ export const Actions: React.FC = () => {
 
       <div>
         <Modal
-          title="Apoiar"
           trigger={
             <Button
               data-gtm="Apoiar"

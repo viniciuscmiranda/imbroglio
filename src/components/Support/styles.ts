@@ -5,7 +5,7 @@ export const Container = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-  gap: '$1',
+  gap: '$2',
 });
 
 export const Title = styled('p', {
@@ -30,6 +30,7 @@ export const QrCode = styled('a', {
 
   '> img': {
     width: '100%',
+    pointerEvents: 'none',
   },
 });
 

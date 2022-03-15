@@ -13,7 +13,7 @@ export const Instructions: React.FC = () => {
         <SectionTitle>🔡 Como jogar</SectionTitle>
 
         <List>
-          <li>Segure e arraste as letras da bancada para as linhas</li>
+          <li>Segure e arraste as letras da bancada para o quadro</li>
           <li>
             <Image>
               <img src={dragLetter} alt="Arrastando letra" />

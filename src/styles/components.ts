@@ -15,7 +15,7 @@ export const SectionTitle = styled('h3', {
     marginTop: '$0',
     width: '100%',
     borderRadius: '$1',
-    backgroundColor: '$yellow',
+    backgroundColor: '$orange',
   },
 });
 

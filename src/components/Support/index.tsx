@@ -13,7 +13,7 @@ export const Support: React.FC = () => {
     <Container>
       <Title>{'Todo apoio é bem-vindo! :)'}</Title>
 
-      <QrCode href={PIX_URL} target="_blank">
+      <QrCode href={PIX_URL} target="_blank" data-gtm="Abrir QRCode PIX">
         <img src={SupportQrCode} alt="Apoiar" />
       </QrCode>
 

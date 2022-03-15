@@ -130,10 +130,10 @@ export const GameProvider: React.FC = ({ children }) => {
   }, [letters]);
 
   const share = useCallback(() => {
-    // const unusedLetters = rows.reduce((acc, row, rowIndex) => {
-    //   if (correctRows.includes(rowIndex)) return acc;
-    //   else return acc + row.length;
-    // }, letters.length);
+    const unusedLetters = rows.reduce((acc, row, rowIndex) => {
+      if (correctRows.includes(rowIndex)) return acc;
+      else return acc + row.length;
+    }, letters.length);
 
     const correctRowsContent: string[] = [];
     rows.forEach((row, rowIndex) => {
@@ -145,7 +145,7 @@ export const GameProvider: React.FC = ({ children }) => {
     const shareContent: string[] | string = [];
 
     shareContent.push(`🔡 ${GAME_NAME} #${puzzle.id}`);
-    // shareContent.push(`🟦 ${unusedLetters} letras não usadas`);
+    if (unusedLetters) shareContent.push(`🟦 ${unusedLetters} na bancada`);
     shareContent.push(``);
     shareContent.push(`⭐ ${points} pontos`);
     shareContent.push(correctRowsContent.join(''));
