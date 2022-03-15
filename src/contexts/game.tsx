@@ -152,12 +152,16 @@ export const GameProvider: React.FC = ({ children }) => {
     shareContent.push('Jogue comigo!');
     shareContent.push(APP_URL);
 
-    if (isMobile()) {
-      navigator.share({
-        title: GAME_NAME,
-        text: shareContent.join('\n'),
-      });
-    } else {
+    try {
+      if (isMobile()) {
+        navigator.share({
+          title: GAME_NAME,
+          text: shareContent.join('\n'),
+        });
+      } else {
+        throw new Error('Not mobile');
+      }
+    } catch {
       navigator.clipboard.writeText(shareContent.join('\n')).then(() => {
         toast('Copiado!', 'share');
       });
