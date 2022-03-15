@@ -3,6 +3,7 @@ import { Title } from 'components/Title';
 import { Toasts } from 'components/Toasts';
 import { MAX_LETTERS, UNUSED_DROPPABLE_ID, UNUSED_ROW_LENGTH } from 'constants';
 import { useGame } from 'hooks';
+import _ from 'lodash';
 import React from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
@@ -119,59 +120,47 @@ export const Game: React.FC = () => {
         {lastSolution && (
           <LastSolution>
             Solução de ontem:
-            <span>
-              {' '}
-              {lastSolution.map((s) => s[0].toUpperCase() + s.substring(1)).join(', ')}
-            </span>
+            <span> {lastSolution.map(_.capitalize).join(', ')}</span>
           </LastSolution>
         )}
 
         {/* Bench */}
         <BenchContainer>
-          {Array.from({ length: MAX_LETTERS / UNUSED_ROW_LENGTH }).map(
-            (_row, rowIndex) => (
-              <Droppable
-                key={rowIndex}
-                droppableId={`${UNUSED_DROPPABLE_ID}-${rowIndex}`}
-                isDropDisabled={letters.length >= MAX_LETTERS}
-                direction="horizontal"
-              >
-                {(provided) => {
-                  const rowLetters = letters.slice(
-                    rowIndex * UNUSED_ROW_LENGTH,
-                    rowIndex * UNUSED_ROW_LENGTH + UNUSED_ROW_LENGTH,
-                  );
-
-                  return (
-                    <BenchLettersContainer
-                      disabled={!rowLetters.length}
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
+          {_.chunk(letters, UNUSED_ROW_LENGTH).map((row, rowIndex) => (
+            <Droppable
+              key={rowIndex}
+              droppableId={`${UNUSED_DROPPABLE_ID}-${rowIndex}`}
+              isDropDisabled={letters.length >= MAX_LETTERS}
+              direction="horizontal"
+            >
+              {(provided) => (
+                <BenchLettersContainer
+                  disabled={!row.length}
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {row.map((letter, index) => (
+                    <Draggable
+                      key={letter.id}
+                      draggableId={letter.id}
+                      index={index + rowIndex * UNUSED_ROW_LENGTH}
                     >
-                      {rowLetters.map((letter, index) => (
-                        <Draggable
-                          key={letter.id}
-                          draggableId={letter.id}
-                          index={index + rowIndex * UNUSED_ROW_LENGTH}
+                      {(provided) => (
+                        <LetterContainer
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
                         >
-                          {(provided) => (
-                            <LetterContainer
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              {letter.content}
-                            </LetterContainer>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </BenchLettersContainer>
-                  );
-                }}
-              </Droppable>
-            ),
-          )}
+                          {letter.content}
+                        </LetterContainer>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </BenchLettersContainer>
+              )}
+            </Droppable>
+          ))}
 
           <Toasts />
         </BenchContainer>

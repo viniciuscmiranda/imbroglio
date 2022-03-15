@@ -182,7 +182,7 @@ export const GameProvider: React.FC = ({ children }) => {
         points: points,
         words: specialCharactersRows.map((row) => {
           const word = row.letters.join('');
-          return word[0].toUpperCase() + word.substring(1);
+          return _.capitalize(word);
         }),
       };
 
@@ -237,23 +237,30 @@ export const GameProvider: React.FC = ({ children }) => {
       return;
     }
 
-    const nextRows = parsedData.rows as Row[];
-    let rowsSample = [...nextRows].flat();
+    const nextRows = parsedData.rows as string[][];
+    const rowsSample = [...nextRows].flat();
 
     const nextLetters: Letter[] = [];
 
     letters.forEach((letter) => {
-      const foundLetter = rowsSample.find(({ content }) => content === letter.content);
+      const foundLetter = rowsSample.find((content, index) => {
+        if (content === letter.content) {
+          rowsSample.splice(index, 1);
+          return true;
+        }
+      });
 
-      if (foundLetter) {
-        rowsSample = rowsSample.filter(({ id }) => id !== foundLetter.id);
-      } else {
+      if (!foundLetter) {
         nextLetters.push(letter);
       }
     });
 
-    setRows(nextRows);
     setLetters(nextLetters);
+    setRows(
+      nextRows.map((row) =>
+        row.map((content) => ({ content, id: String(Math.random()) })),
+      ),
+    );
   }, []);
 
   // check words
@@ -279,29 +286,34 @@ export const GameProvider: React.FC = ({ children }) => {
       const nextWords = nextSpecialCharactersRows.map((row) => row.letters.join(''));
 
       const today = moment().format('YYYY-MM-DD');
-      const storedWords = JSON.parse(
-        localStorage.getItem(`${LOCAL_WORDS_KEY}${today}`) || '[]',
-      );
+      const storedWords = JSON.parse(localStorage.getItem(LOCAL_WORDS_KEY) || '{}');
 
       nextWords.forEach((word) => {
-        if (!prevWords.includes(word) && !storedWords.includes(word)) {
-          storedWords.push(word);
+        if (!prevWords.includes(word) && !storedWords[today]?.includes(word)) {
+          if (!storedWords[today]) storedWords[today] = [];
+          storedWords[today].push(_.capitalize(word));
 
           TagManager.dataLayer({
             dataLayer: {
               event: 'word',
-              word: word[0].toUpperCase() + word.substring(1),
+              word: _.capitalize(word),
             },
           });
         }
       });
 
-      localStorage.setItem(`${LOCAL_WORDS_KEY}${today}`, JSON.stringify(storedWords));
+      localStorage.setItem(LOCAL_WORDS_KEY, JSON.stringify(storedWords));
       return nextSpecialCharactersRows;
     });
 
     setCorrectRows(nextCorrectRows);
-    localStorage.setItem(LOCAL_ROW_KEY, JSON.stringify({ puzzleId: puzzle.id, rows }));
+    localStorage.setItem(
+      LOCAL_ROW_KEY,
+      JSON.stringify({
+        puzzleId: puzzle.id,
+        rows: rows.map((row) => row.map(({ content }) => content)),
+      }),
+    );
   }, [rows]);
 
   // check win
