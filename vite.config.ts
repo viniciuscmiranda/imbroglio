@@ -16,15 +16,7 @@ export default defineConfig({
       },
     }),
     VitePWA({
-      includeAssets: [
-        'favicon.ico',
-        'robots.txt',
-        'banner.png',
-        'apple-touch-icon.png',
-        'splash/*',
-        'CNAME',
-      ],
-      registerType: 'autoUpdate',
+      includeAssets: ['*'],
       manifest: {
         name: 'imbróglio',
         short_name: 'imbróglio',
@@ -45,12 +37,6 @@ export default defineConfig({
             src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
           },
         ],
       },
