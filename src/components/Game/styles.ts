@@ -16,13 +16,6 @@ export const GameContainer = styled('div', {
   },
 });
 
-export const HeaderContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
-});
-
 export const RowsContainer = styled('div', {
   backgroundColor: '$white',
   borderRadius: '$1',

@@ -57,11 +57,10 @@ export const Actions: React.FC = () => {
           <Stats />
         </Modal>
 
-        <Button data-gtm="Compartilhar" aria-label="Compartilhar" onClick={() => share()}>
+        <Points data-gtm="Compartilhar" aria-label="Compartilhar" onClick={() => share()}>
           <FiShare2 size={iconSize} />
-        </Button>
-
-        <Points>{points} Pontos</Points>
+          {points} pontos
+        </Points>
       </div>
 
       <div>

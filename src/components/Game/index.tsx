@@ -9,7 +9,6 @@ import {
   BenchContainer,
   BenchLettersContainer,
   GameContainer,
-  HeaderContainer,
   LastSolution,
   LetterContainer,
   RowContainer,
@@ -75,10 +74,9 @@ export const Game: React.FC = () => {
 
   return (
     <GameContainer>
-      <HeaderContainer>
-        <Title />
-        <Actions />
-      </HeaderContainer>
+      <Title />
+
+      <Actions />
 
       <DragDropContext onDragEnd={onDragEnd}>
         {/* Rows */}

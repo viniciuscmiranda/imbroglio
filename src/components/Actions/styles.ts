@@ -1,4 +1,5 @@
 import { styled } from 'styles';
+import { Button } from 'styles/components';
 
 export const Container = styled('div', {
   justifyContent: 'space-between',
@@ -13,7 +14,10 @@ export const Container = styled('div', {
   },
 });
 
-export const Points = styled('p', {
+export const Points = styled(Button, {
   fontWeight: 'bold',
-  color: '$darkBlue',
+  width: 'auto',
+  gap: '$0',
+  fontSize: '1.15rem',
+  padding: '0 1rem',
 });

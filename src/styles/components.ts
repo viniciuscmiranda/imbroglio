@@ -20,13 +20,13 @@ export const SectionTitle = styled('h3', {
 });
 
 export const Button = styled('button', {
-  $$size: '2.75rem',
+  $$size: '3rem',
   width: '$$size',
   height: '$$size',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: '50%',
+  borderRadius: '$$size',
   cursor: 'pointer',
 
   border: '.2rem solid $darkBlue',
@@ -36,7 +36,7 @@ export const Button = styled('button', {
 
   transition: 'transform .2s ease',
   '&:hover:not(:disabled)': {
-    transform: 'scale(1.1)',
+    transform: 'scale(1.065)',
   },
 
   '&:disabled': {

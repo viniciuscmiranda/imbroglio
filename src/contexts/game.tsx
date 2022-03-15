@@ -144,7 +144,7 @@ export const GameProvider: React.FC = ({ children }) => {
 
     const shareContent: string[] | string = [];
 
-    shareContent.push(`🔡 ${GAME_NAME}# ${puzzle.id}`);
+    shareContent.push(`🔡 ${GAME_NAME} #${puzzle.id}`);
     // shareContent.push(`🟦 ${unusedLetters} letras não usadas`);
     shareContent.push(``);
     shareContent.push(`⭐ ${points} pontos`);
