@@ -3,7 +3,7 @@ import { Modal } from 'components/Modal';
 import { capitalize, uniqueId } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { FiInfo } from 'react-icons/fi';
-import { Section, SectionTitle } from 'styles/components';
+import { SectionTitle } from 'styles/components';
 
 import { Button, Content } from './styles';
 
