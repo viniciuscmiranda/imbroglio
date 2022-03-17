@@ -14,7 +14,7 @@ import {
 } from './styles';
 
 type ModalProps = {
-  open?: boolean;
+  open?: boolean | null;
   title?: string;
   startOpen?: boolean | null;
   onOpen?: () => void;
@@ -28,14 +28,14 @@ export const Modal: React.FC<ModalProps> = ({
   open: propsOpen,
   onOpen,
   onClose,
-  startOpen = null,
+  startOpen,
   trigger,
 }) => {
   const closeButtonRef = useRef<React.ElementRef<typeof Button>>(null);
   const contentRef = useRef<React.ElementRef<typeof Content>>(null);
   const triggerRef = useRef<React.ElementRef<typeof TriggerContainer>>(null);
 
-  const [open, setOpen] = useState<boolean | null>(startOpen);
+  const [open, setOpen] = useState<boolean | null>(startOpen ? true : null);
 
   function onKeyDown(event: KeyboardEvent) {
     if (event.key === 'Escape') setOpen(false);
@@ -43,7 +43,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     if (propsOpen === undefined) return;
-    setOpen(propsOpen);
+    setOpen(propsOpen ? true : null);
   }, [propsOpen]);
 
   useEffect(() => {
