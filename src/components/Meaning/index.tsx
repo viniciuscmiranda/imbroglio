@@ -1,7 +1,7 @@
 import { Fallback } from 'components/Fallback';
 import { Modal } from 'components/Modal';
 import { capitalize, uniqueId } from 'lodash';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FiInfo } from 'react-icons/fi';
 import { SectionTitle } from 'styles/components';
 
@@ -32,6 +32,10 @@ export const Meaning: React.FC<MeaningProps> = ({ word }) => {
 
     setLoading(false);
   }, [error, meanings, word]);
+
+  useEffect(() => {
+    setMeanings([]);
+  }, [word]);
 
   return (
     <Modal

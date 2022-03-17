@@ -89,7 +89,13 @@ export const Modal: React.FC<ModalProps> = ({
             </Button>
           </Header>
 
-          <Scrollbars autoHide style={{ height: '36.5rem' }}>
+          <Scrollbars
+            autoHide
+            style={{ height: '36.5rem' }}
+            renderView={(props) => (
+              <div {...props} style={{ ...props.style, overflowX: 'hidden' }} />
+            )}
+          >
             <Children tabIndex={open ? 0 : -1}>{children}</Children>
           </Scrollbars>
         </Content>
