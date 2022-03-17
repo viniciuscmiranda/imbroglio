@@ -39,12 +39,6 @@ export const Button = styled('button', {
     transform: 'scale(1.065)',
   },
 
-  '&:disabled': {
-    cursor: 'not-allowed',
-    backgroundColor: '$gray',
-    borderColor: '$darkGray',
-  },
-
   '*': {
     pointerEvents: 'none',
   },

@@ -28,10 +28,6 @@ export const Actions: React.FC = () => {
   return (
     <Container>
       <div>
-        <Button aria-label="Recomeçar" title="Recomeçar" onClick={() => resetGame()}>
-          <FiRefreshCw size={iconSize} />
-        </Button>
-
         <Button
           data-gtm="Embaralhar letras"
           aria-label="Embaralhar letras"
@@ -39,6 +35,10 @@ export const Actions: React.FC = () => {
           onClick={() => shuffleBench()}
         >
           <FiShuffle size={iconSize} />
+        </Button>
+
+        <Button aria-label="Recomeçar" title="Recomeçar" onClick={() => resetGame()}>
+          <FiRefreshCw size={iconSize} />
         </Button>
 
         <Modal

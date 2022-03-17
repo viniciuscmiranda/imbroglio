@@ -1,6 +1,7 @@
 import { Game } from 'components/Game';
 import { DataProvider } from 'contexts/data';
 import { GameProvider } from 'contexts/game';
+import { KeyboardProvider } from 'contexts/keyboard';
 import { ToastProvider } from 'contexts/toast';
 import React from 'react';
 import TagManager from 'react-gtm-module';
@@ -34,7 +35,9 @@ export const App: React.FC = () => {
     <ToastProvider>
       <DataProvider>
         <GameProvider>
-          <Game />
+          <KeyboardProvider>
+            <Game />
+          </KeyboardProvider>
         </GameProvider>
       </DataProvider>
     </ToastProvider>

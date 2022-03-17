@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { FiX } from 'react-icons/fi';
 import { Button } from 'styles/components';
@@ -16,7 +16,7 @@ import {
 type ModalProps = {
   open?: boolean;
   title?: string;
-  startOpen?: boolean;
+  startOpen?: boolean | null;
   onOpen?: () => void;
   onClose?: () => void;
   trigger?: React.ReactElement;
@@ -28,43 +28,68 @@ export const Modal: React.FC<ModalProps> = ({
   open: propsOpen,
   onOpen,
   onClose,
-  startOpen = false,
+  startOpen = null,
   trigger,
 }) => {
-  const [open, setOpen] = useState<ModalProps['open']>();
+  const closeButtonRef = useRef<React.ElementRef<typeof Button>>(null);
+  const contentRef = useRef<React.ElementRef<typeof Content>>(null);
+  const triggerRef = useRef<React.ElementRef<typeof TriggerContainer>>(null);
+
+  const [open, setOpen] = useState<boolean | null>(startOpen);
 
   useEffect(() => {
+    if (propsOpen === undefined) return;
     setOpen(propsOpen);
   }, [propsOpen]);
 
   useEffect(() => {
-    setOpen(startOpen);
-  }, [startOpen]);
+    if (open === null) return;
 
-  useEffect(() => {
-    if (open === undefined) return;
-    if (open) onOpen?.();
-    else onClose?.();
+    if (open) {
+      contentRef.current?.addEventListener(
+        'transitionend',
+        () => closeButtonRef.current?.focus(),
+        { once: true },
+      );
+
+      window.addEventListener(
+        'keydown',
+        ({ key }) => key === 'Escape' && setOpen(false),
+        { once: true },
+      );
+
+      onOpen?.();
+    } else {
+      (triggerRef.current?.childNodes[0] as any)?.focus();
+      onClose?.();
+    }
   }, [open]);
 
   return (
     <>
-      <TriggerContainer onClick={() => setOpen(!open)}>{trigger}</TriggerContainer>
+      <TriggerContainer ref={triggerRef} onClick={() => setOpen(!open)}>
+        {trigger}
+      </TriggerContainer>
 
-      <Overlay onClick={() => setOpen(false)} open={propsOpen || open} />
+      <Overlay onClick={() => setOpen(false)} open={Boolean(propsOpen || open)} />
 
       <Container>
-        <Content open={propsOpen || open}>
+        <Content ref={contentRef} open={Boolean(propsOpen || open)}>
           <Header>
             <ModalTitle>{title}</ModalTitle>
 
-            <Button variant="ghost" aria-label="Fechar" onClick={() => setOpen(false)}>
+            <Button
+              ref={closeButtonRef}
+              variant="ghost"
+              aria-label="Fechar"
+              onClick={() => setOpen(false)}
+            >
               <FiX size="1.35rem" />
             </Button>
           </Header>
 
           <Scrollbars autoHide style={{ height: '35rem' }}>
-            <Children>{children}</Children>
+            <Children tabIndex={open ? 0 : -1}>{children}</Children>
           </Scrollbars>
         </Content>
       </Container>

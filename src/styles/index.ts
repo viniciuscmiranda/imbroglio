@@ -15,10 +15,9 @@ export const { globalCss, styled, keyframes } = createStitches({
       green: '#169873',
       darkGreen: '#0c7d5d',
       white: '#fff',
-      gray: '#aaa',
-      darkGray: '#888',
       overlay: 'rgba(0,0,0,.3)',
       stroke: '#e5e5e5',
+      lightGray: '#f5f5f5',
       background: '$yellow',
     },
 
@@ -48,8 +47,8 @@ export const { globalCss, styled, keyframes } = createStitches({
     },
 
     zIndices: {
-      toast: 11,
-      modal: 10,
+      toast: 9999,
+      modal: 9998,
     },
   },
 });

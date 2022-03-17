@@ -1,4 +1,4 @@
-import { MAX_LETTERS, ROWS_AMOUNT, UNUSED_ROW_LENGTH } from 'constants';
+import { BENCH_ROW_LENGTH, MAX_LETTERS, ROWS_AMOUNT } from 'constants';
 import { styled } from 'styles';
 
 export const GameContainer = styled('div', {
@@ -12,7 +12,7 @@ export const GameContainer = styled('div', {
   gap: '1em',
 });
 
-export const RowsContainer = styled('div', {
+export const Board = styled('div', {
   backgroundColor: '$white',
   borderRadius: '$1',
   overflow: 'hidden',
@@ -27,12 +27,20 @@ export const RowsContainer = styled('div', {
   },
 });
 
-export const RowContainer = styled('div', {
+export const Row = styled('div', {
   display: 'flex',
   padding: '$0',
   paddingLeft: '0',
   flex: '1',
   overflow: 'hidden',
+
+  variants: {
+    selected: {
+      true: {
+        backgroundColor: '$lightGray',
+      },
+    },
+  },
 });
 
 export const LetterContainer = styled('span', {
@@ -72,11 +80,11 @@ export const LetterContainer = styled('span', {
 
 export const BenchContainer = styled('div', {
   position: 'relative',
-  minWidth: `calc(${UNUSED_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
-    UNUSED_ROW_LENGTH + 1
+  minWidth: `calc(${BENCH_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
+    BENCH_ROW_LENGTH + 1
   }))`,
-  height: `calc(${MAX_LETTERS / UNUSED_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
-    MAX_LETTERS / UNUSED_ROW_LENGTH - 1
+  height: `calc(${MAX_LETTERS / BENCH_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
+    MAX_LETTERS / BENCH_ROW_LENGTH - 1
   }))`,
 });
 

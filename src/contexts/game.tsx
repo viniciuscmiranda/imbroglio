@@ -5,7 +5,7 @@ import moment from 'moment';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import TagManager from 'react-gtm-module';
 import { Letter, LetterType, Puzzle, Row, SpecialCharactersRow, Stats } from 'types';
-import { isMobile } from 'utils';
+import { deepSet, isMobile } from 'utils';
 
 import { DataContextProps } from './data';
 
@@ -24,6 +24,12 @@ export type GameContextProps = {
   lastSolution: DataContextProps['lastSolution'];
   puzzleId: Puzzle['id'];
   points: number;
+
+  setRows: (rows: Row[]) => void;
+  setLetters: (letters: Letter[]) => void;
+
+  setSelectedRowIndex: (index: number) => void;
+  selectedRowIndex: number;
 };
 
 const LOCAL_ROW_KEY = 'ROWS';
@@ -45,6 +51,8 @@ export const GameProvider: React.FC = ({ children }) => {
   const [specialCharactersRows, setSpecialCharactersRows] = useState<
     SpecialCharactersRow[]
   >([]);
+  const [selectedRowIndex, setSelectedRowIndex] =
+    useState<GameContextProps['selectedRowIndex']>(-1);
 
   const [points, setPoints] = useState<GameContextProps['points']>(0);
   const [stats, setStats] = useState<GameContextProps['stats']>(
@@ -58,27 +66,20 @@ export const GameProvider: React.FC = ({ children }) => {
       const nextRows = [...rows];
       const nextLetters = [...letters];
 
-      const fromUnused = typeof rowIndex !== 'number';
-      const toUnused = typeof nextRowIndex !== 'number';
-      const fromRow = typeof rowIndex === 'number';
-      const toRow = typeof nextRowIndex === 'number';
+      const fromBench = typeof rowIndex !== 'number';
+      const toBench = typeof nextRowIndex !== 'number';
+      const fromBoard = typeof rowIndex === 'number';
+      const toBoard = typeof nextRowIndex === 'number';
 
-      if (fromUnused && toUnused) {
-        nextLetters.splice(index, 1);
-        nextLetters.splice(nextIndex, 0, letter);
-      } else if (fromUnused && toRow) {
-        nextLetters.splice(index, 1);
-        nextRows[nextRowIndex].splice(nextIndex, 0, letter);
-      } else if (fromRow && toUnused) {
-        nextRows[rowIndex].splice(index, 1);
-        nextLetters.splice(nextIndex, 0, letter);
-      } else if (fromRow && toRow) {
-        nextRows[rowIndex].splice(index, 1);
-        nextRows[nextRowIndex].splice(nextIndex, 0, letter);
-      }
+      if (fromBench) nextLetters.splice(index, 1);
+      if (toBench) nextLetters.splice(nextIndex, 0, letter);
+      if (fromBoard) nextRows[rowIndex].splice(index, 1);
+      if (toBoard) nextRows[nextRowIndex].splice(nextIndex, 0, letter);
 
-      setRows(nextRows);
-      setLetters(nextLetters);
+      if (toBoard) setSelectedRowIndex(nextRowIndex);
+
+      setLetters(deepSet(nextLetters));
+      setRows(nextRows.map((row) => deepSet(row)));
     },
     [rows, letters],
   );
@@ -130,7 +131,7 @@ export const GameProvider: React.FC = ({ children }) => {
   }, [letters]);
 
   const share = useCallback(() => {
-    const unusedLetters = rows.reduce((acc, row, rowIndex) => {
+    const benchLetters = rows.reduce((acc, row, rowIndex) => {
       if (correctRows.includes(rowIndex)) return acc;
       else return acc + row.length;
     }, letters.length);
@@ -145,11 +146,10 @@ export const GameProvider: React.FC = ({ children }) => {
     const shareContent: string[] | string = [];
 
     shareContent.push(`🔡 ${GAME_NAME} #${puzzle.id}`);
-    if (unusedLetters) shareContent.push(`🟦 ${unusedLetters} na bancada`);
+    if (benchLetters) shareContent.push(`🟦 ${benchLetters} letras na bancada`);
     shareContent.push(``);
     shareContent.push(`⭐ ${points} pontos`);
     shareContent.push(correctRowsContent.join(''));
-    shareContent.push('Jogue comigo!');
     shareContent.push(APP_URL);
 
     try {
@@ -350,6 +350,10 @@ export const GameProvider: React.FC = ({ children }) => {
         resetGame,
         shuffleBench,
         share,
+        setLetters,
+        setRows,
+        setSelectedRowIndex,
+        selectedRowIndex,
       }}
     >
       {children}

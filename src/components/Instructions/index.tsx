@@ -35,7 +35,7 @@ export const Instructions: React.FC = () => {
         <SectionTitle />
 
         <li>
-          <FiRefreshCw /> Devolver letras para a bancada
+          <FiRefreshCw /> Remover letras do quadro
         </li>
         <li>
           <FiShuffle /> Embaralhar letras da bancada

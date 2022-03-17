@@ -13,3 +13,7 @@ export function isMobile() {
   })(navigator.userAgent || navigator.vendor);
   return check;
 }
+
+export function deepSet<T>(arr: T[]): T[] {
+  return Array.from(new Set(arr.map((i) => JSON.stringify(i)))).map((i) => JSON.parse(i));
+}

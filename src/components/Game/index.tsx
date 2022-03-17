@@ -1,8 +1,8 @@
 import { Actions } from 'components/Actions';
 import { Title } from 'components/Title';
 import { Toasts } from 'components/Toasts';
-import { MAX_LETTERS, UNUSED_DROPPABLE_ID, UNUSED_ROW_LENGTH } from 'constants';
-import { useGame } from 'hooks';
+import { BENCH_DROPPABLE_ID, BENCH_ROW_LENGTH, MAX_LETTERS } from 'constants';
+import { useGame, useKeyboard } from 'hooks';
 import _ from 'lodash';
 import React from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
@@ -10,11 +10,11 @@ import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautif
 import {
   BenchContainer,
   BenchLettersContainer,
+  Board,
   GameContainer,
   LastSolution,
   LetterContainer,
-  RowContainer,
-  RowsContainer,
+  Row,
 } from './styles';
 
 export const Game: React.FC = () => {
@@ -27,22 +27,24 @@ export const Game: React.FC = () => {
     lastSolution,
   } = useGame();
 
+  const { selectedRowIndex, setSelectedRowIndex } = useKeyboard();
+
   function onDragEnd(result: DropResult) {
     if (!result.destination) return;
 
     const prevIndex = result.source.index;
     const nextIndex = result.destination.index;
 
-    const fromUnused = result.source.droppableId.includes(UNUSED_DROPPABLE_ID);
-    const toUnused = result.destination.droppableId.includes(UNUSED_DROPPABLE_ID);
+    const fromBench = result.source.droppableId.includes(BENCH_DROPPABLE_ID);
+    const toBench = result.destination.droppableId.includes(BENCH_DROPPABLE_ID);
 
-    if (toUnused && fromUnused) {
+    if (toBench && fromBench) {
       dropLetter({
         letter: letters[prevIndex],
         index: prevIndex,
         nextIndex,
       });
-    } else if (toUnused) {
+    } else if (toBench) {
       const prevRowIndex = Number(result.source.droppableId);
 
       dropLetter({
@@ -51,7 +53,7 @@ export const Game: React.FC = () => {
         nextIndex,
         rowIndex: prevRowIndex,
       });
-    } else if (fromUnused) {
+    } else if (fromBench) {
       const nextRowIndex = Number(result.destination.droppableId);
 
       dropLetter({
@@ -82,7 +84,7 @@ export const Game: React.FC = () => {
 
       <DragDropContext onDragEnd={onDragEnd}>
         {/* Rows */}
-        <RowsContainer>
+        <Board>
           {rows.map((row, rowIndex) => {
             const originalRow = getSpecialCharactersRow(row, rowIndex);
 
@@ -93,7 +95,12 @@ export const Game: React.FC = () => {
                 direction="horizontal"
               >
                 {(provided) => (
-                  <RowContainer ref={provided.innerRef} {...provided.droppableProps}>
+                  <Row
+                    selected={selectedRowIndex === rowIndex}
+                    onClick={() => setSelectedRowIndex(rowIndex)}
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
                     {originalRow.map((letter, index) => (
                       <Draggable key={letter.id} draggableId={letter.id} index={index}>
                         {(provided) => (
@@ -109,12 +116,12 @@ export const Game: React.FC = () => {
                       </Draggable>
                     ))}
                     {provided.placeholder}
-                  </RowContainer>
+                  </Row>
                 )}
               </Droppable>
             );
           })}
-        </RowsContainer>
+        </Board>
 
         {/* Last Solution */}
         {lastSolution && (
@@ -126,10 +133,10 @@ export const Game: React.FC = () => {
 
         {/* Bench */}
         <BenchContainer>
-          {_.chunk(letters, UNUSED_ROW_LENGTH).map((row, rowIndex) => (
+          {_.chunk(letters, BENCH_ROW_LENGTH).map((row, rowIndex) => (
             <Droppable
               key={rowIndex}
-              droppableId={`${UNUSED_DROPPABLE_ID}-${rowIndex}`}
+              droppableId={`${BENCH_DROPPABLE_ID}-${rowIndex}`}
               isDropDisabled={letters.length >= MAX_LETTERS}
               direction="horizontal"
             >
@@ -143,7 +150,7 @@ export const Game: React.FC = () => {
                     <Draggable
                       key={letter.id}
                       draggableId={letter.id}
-                      index={index + rowIndex * UNUSED_ROW_LENGTH}
+                      index={index + rowIndex * BENCH_ROW_LENGTH}
                     >
                       {(provided) => (
                         <LetterContainer
