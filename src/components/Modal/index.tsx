@@ -37,6 +37,10 @@ export const Modal: React.FC<ModalProps> = ({
 
   const [open, setOpen] = useState<boolean | null>(startOpen);
 
+  function onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape') setOpen(false);
+  }
+
   useEffect(() => {
     if (propsOpen === undefined) return;
     setOpen(propsOpen);
@@ -52,16 +56,13 @@ export const Modal: React.FC<ModalProps> = ({
         { once: true },
       );
 
-      window.addEventListener(
-        'keydown',
-        ({ key }) => key === 'Escape' && setOpen(false),
-        { once: true },
-      );
-
       onOpen?.();
+      window.addEventListener('keydown', onKeyDown);
     } else {
       (triggerRef.current?.childNodes[0] as any)?.focus();
+
       onClose?.();
+      window.removeEventListener('keydown', onKeyDown);
     }
   }, [open]);
 

@@ -1,4 +1,5 @@
 import { Actions } from 'components/Actions';
+import { Meaning } from 'components/Meaning';
 import { Title } from 'components/Title';
 import { Toasts } from 'components/Toasts';
 import { BENCH_DROPPABLE_ID, BENCH_ROW_LENGTH, MAX_LETTERS } from 'constants';
@@ -8,12 +9,12 @@ import React from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import {
-  BenchContainer,
-  BenchLettersContainer,
+  Bench,
+  BenchRow,
   Board,
   GameContainer,
   LastSolution,
-  LetterContainer,
+  Letter,
   Row,
 } from './styles';
 
@@ -101,20 +102,27 @@ export const Game: React.FC = () => {
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
+                    {correctRows.includes(rowIndex) && (
+                      <Meaning
+                        word={originalRow.map(({ content }) => content).join('')}
+                      />
+                    )}
+
                     {originalRow.map((letter, index) => (
                       <Draggable key={letter.id} draggableId={letter.id} index={index}>
                         {(provided) => (
-                          <LetterContainer
+                          <Letter
                             ref={provided.innerRef}
                             correct={correctRows.includes(rowIndex)}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                           >
                             {letter.content}
-                          </LetterContainer>
+                          </Letter>
                         )}
                       </Draggable>
                     ))}
+
                     {provided.placeholder}
                   </Row>
                 )}
@@ -132,7 +140,7 @@ export const Game: React.FC = () => {
         )}
 
         {/* Bench */}
-        <BenchContainer>
+        <Bench>
           {_.chunk(letters, BENCH_ROW_LENGTH).map((row, rowIndex) => (
             <Droppable
               key={rowIndex}
@@ -141,7 +149,7 @@ export const Game: React.FC = () => {
               direction="horizontal"
             >
               {(provided) => (
-                <BenchLettersContainer
+                <BenchRow
                   disabled={!row.length}
                   ref={provided.innerRef}
                   {...provided.droppableProps}
@@ -153,24 +161,24 @@ export const Game: React.FC = () => {
                       index={index + rowIndex * BENCH_ROW_LENGTH}
                     >
                       {(provided) => (
-                        <LetterContainer
+                        <Letter
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
                           {letter.content}
-                        </LetterContainer>
+                        </Letter>
                       )}
                     </Draggable>
                   ))}
                   {provided.placeholder}
-                </BenchLettersContainer>
+                </BenchRow>
               )}
             </Droppable>
           ))}
 
           <Toasts />
-        </BenchContainer>
+        </Bench>
       </DragDropContext>
     </GameContainer>
   );

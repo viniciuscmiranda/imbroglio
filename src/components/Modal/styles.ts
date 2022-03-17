@@ -67,7 +67,6 @@ export const Header = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: '$1',
   padding: '0 $1',
   height: 'var(--header-height)',
 });
@@ -79,7 +78,6 @@ export const ModalTitle = styled('h2', {
 });
 
 export const Children = styled('div', {
-  padding: '0 $1',
-  paddingBottom: '$1',
+  padding: '$1',
   overflow: 'hidden',
 });

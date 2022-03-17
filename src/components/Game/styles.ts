@@ -8,7 +8,6 @@ export const GameContainer = styled('div', {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  userSelect: 'none',
   gap: '1em',
 });
 
@@ -33,6 +32,7 @@ export const Row = styled('div', {
   paddingLeft: '0',
   flex: '1',
   overflow: 'hidden',
+  position: 'relative',
 
   variants: {
     selected: {
@@ -43,7 +43,7 @@ export const Row = styled('div', {
   },
 });
 
-export const LetterContainer = styled('span', {
+export const Letter = styled('span', {
   backgroundColor: '$blue',
   height: '$letterSize',
   width: '$letterSize',
@@ -78,7 +78,7 @@ export const LetterContainer = styled('span', {
   },
 });
 
-export const BenchContainer = styled('div', {
+export const Bench = styled('div', {
   position: 'relative',
   minWidth: `calc(${BENCH_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
     BENCH_ROW_LENGTH + 1
@@ -88,13 +88,10 @@ export const BenchContainer = styled('div', {
   }))`,
 });
 
-export const BenchLettersContainer = styled('div', {
+export const BenchRow = styled('div', {
   display: 'flex',
   marginBottom: '$0',
-
-  '&:first-child': {
-    height: '$letterSize',
-  },
+  height: '$letterSize',
 
   variants: {
     disabled: {

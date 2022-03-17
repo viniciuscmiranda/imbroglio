@@ -3,20 +3,25 @@ import { GooSpinner } from 'react-spinners-kit';
 
 import { Container } from './styles';
 
-type LoadingProps = {
+type LoadingProps = React.ComponentProps<typeof Container> & {
   error?: boolean;
+  errorMessage?: string;
 };
 
-export const Loading: React.FC<LoadingProps> = ({ error }) => {
+export const Fallback: React.FC<LoadingProps> = ({
+  error,
+  errorMessage = 'Erro de conexão :(',
+  ...props
+}) => {
   return (
-    <Container>
+    <Container {...props}>
       {!error ? (
         <>
           <GooSpinner size={56} color="var(--spinner-color)" />
           Carregando
         </>
       ) : (
-        <>{'Erro de conexão :('}</>
+        <>{errorMessage}</>
       )}
     </Container>
   );

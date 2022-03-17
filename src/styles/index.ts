@@ -49,6 +49,7 @@ export const { globalCss, styled, keyframes } = createStitches({
     zIndices: {
       toast: 9999,
       modal: 9998,
+      meaning: 9997,
     },
   },
 });
@@ -95,5 +96,15 @@ export const global = globalCss({
     backgroundBlendMode: 'multiply',
     backgroundSize: '20rem',
     fontSize: '$normal',
+  },
+
+  a: {
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    color: '$text',
+
+    '&:hover': {
+      textDecoration: 'underline',
+    },
   },
 });

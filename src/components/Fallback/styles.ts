@@ -3,8 +3,8 @@ import { styled } from 'styles';
 export const Container = styled('div', {
   '--spinner-color': '$colors$darkOrange',
 
-  widht: '100%',
-  height: '100vh',
+  position: 'absolute',
+  inset: 0,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

@@ -1,4 +1,4 @@
-import { Loading } from 'components/Loading';
+import { Fallback } from 'components/Fallback';
 import { MAX_REQUEST_TRIES } from 'constants';
 import moment from 'moment';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
@@ -108,7 +108,8 @@ export const DataProvider: React.FC = ({ children }) => {
     setLastSolution(data.lastSolution);
   }, [puzzles]);
 
-  if (loading || !puzzle) return <Loading error={error || (!loading && !puzzle)} />;
+  if (loading) return <Fallback />;
+  if (!puzzle || error) return <Fallback error={error} />;
 
   return (
     <DataContext.Provider
