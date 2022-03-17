@@ -89,7 +89,7 @@ export const Modal: React.FC<ModalProps> = ({
             </Button>
           </Header>
 
-          <Scrollbars autoHide style={{ height: '35rem' }}>
+          <Scrollbars autoHide style={{ height: '36.5rem' }}>
             <Children tabIndex={open ? 0 : -1}>{children}</Children>
           </Scrollbars>
         </Content>

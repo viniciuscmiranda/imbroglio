@@ -33,6 +33,7 @@ export const SocialButton = styled('a', {
   color: '$white',
   backgroundColor: '$orange',
   borderRadius: '2rem',
+  fontWeight: 'normal',
   padding: '$0 $1',
   cursor: 'pointer',
   textDecoration: 'none',
