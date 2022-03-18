@@ -9,14 +9,7 @@ export type ChartProps = {
   data: { label: string; value: number }[];
 };
 
-export const Chart: React.FC<ChartProps> = () => {
-  const data: ChartProps['data'] = Array.from({ length: 30 })
-    .map(() => ({
-      label: moment(new Date(Math.random() * new Date().getTime())).format('DD/MM'),
-      value: Math.round(Math.random() * 100),
-    }))
-    .sort((a, b) => new Date(b.label).getTime() - new Date(a.label).getTime());
-
+export const Chart: React.FC<ChartProps> = ({ data }) => {
   const higherValue = useMemo(() => {
     return Math.max(...data.map(({ value }) => value));
   }, [data]);
