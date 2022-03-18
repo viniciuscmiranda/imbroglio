@@ -1,5 +1,4 @@
 import { uniqueId } from 'lodash';
-import moment from 'moment';
 import React, { useMemo } from 'react';
 import Scrollbars from 'react-custom-scrollbars-2';
 
