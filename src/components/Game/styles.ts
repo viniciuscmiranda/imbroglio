@@ -80,8 +80,8 @@ export const Letter = styled('span', {
 
 export const Bench = styled('div', {
   position: 'relative',
-  minWidth: `calc(${BENCH_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
-    BENCH_ROW_LENGTH + 1
+  width: `calc(${BENCH_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
+    BENCH_ROW_LENGTH + 6
   }))`,
   height: `calc(${MAX_LETTERS / BENCH_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
     MAX_LETTERS / BENCH_ROW_LENGTH - 1
@@ -91,7 +91,10 @@ export const Bench = styled('div', {
 export const BenchRow = styled('div', {
   display: 'flex',
   marginBottom: '$0',
-  height: '$letterSize',
+
+  '&:first-child': {
+    height: '$letterSize',
+  },
 
   variants: {
     disabled: {

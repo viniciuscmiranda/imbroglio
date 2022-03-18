@@ -36,6 +36,7 @@ export const Content = styled('div', {
   '--header-height': '5rem',
 
   backgroundColor: '$white',
+  overflow: 'hidden',
   width: '40rem',
   borderRadius: '$1',
   border: '.2rem solid $text',
@@ -79,5 +80,6 @@ export const ModalTitle = styled('h2', {
 
 export const Children = styled('div', {
   padding: '$1',
-  overflow: 'hidden',
+  paddingBottom: '$2',
+  overflowX: 'hidden',
 });

@@ -43,7 +43,8 @@ export const Actions: React.FC = () => {
 
         <Modal
           title="Minhas estatísticas"
-          open={showStats}
+          // open={showStats}
+          startOpen
           onClose={() => setShowStats(false)}
           onOpen={() => setShowStats(true)}
           trigger={

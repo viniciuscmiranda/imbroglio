@@ -141,41 +141,46 @@ export const Game: React.FC = () => {
 
         {/* Bench */}
         <Bench>
-          {_.chunk(letters, BENCH_ROW_LENGTH).map((row, rowIndex) => (
-            <Droppable
-              key={rowIndex}
-              droppableId={`${BENCH_DROPPABLE_ID}-${rowIndex}`}
-              isDropDisabled={letters.length >= MAX_LETTERS}
-              direction="horizontal"
-            >
-              {(provided) => (
-                <BenchRow
-                  disabled={!row.length}
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {row.map((letter, index) => (
-                    <Draggable
-                      key={letter.id}
-                      draggableId={letter.id}
-                      index={index + rowIndex * BENCH_ROW_LENGTH}
-                    >
-                      {(provided) => (
-                        <Letter
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          {letter.content}
-                        </Letter>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </BenchRow>
-              )}
-            </Droppable>
-          ))}
+          {_.chunk(letters.length ? letters : [null], BENCH_ROW_LENGTH).map(
+            (row, rowIndex) => (
+              <Droppable
+                key={rowIndex}
+                droppableId={`${BENCH_DROPPABLE_ID}-${rowIndex}`}
+                isDropDisabled={letters.length >= MAX_LETTERS}
+                direction="horizontal"
+              >
+                {(provided) => (
+                  <BenchRow
+                    disabled={!row.length}
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {row.map(
+                      (letter, index) =>
+                        letter && (
+                          <Draggable
+                            key={letter.id}
+                            draggableId={letter.id}
+                            index={index + rowIndex * BENCH_ROW_LENGTH}
+                          >
+                            {(provided) => (
+                              <Letter
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                              >
+                                {letter.content}
+                              </Letter>
+                            )}
+                          </Draggable>
+                        ),
+                    )}
+                    {provided.placeholder}
+                  </BenchRow>
+                )}
+              </Droppable>
+            ),
+          )}
 
           <Toasts />
         </Bench>

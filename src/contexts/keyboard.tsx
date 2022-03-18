@@ -3,10 +3,12 @@ import { useGame } from 'hooks';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { Letter, Row } from 'types';
 
+import { GameContextProps } from './game';
+
 export type KeyboardContextProps = {
   selectedRowIndex: number;
   selectedRow: Row | null;
-  setSelectedRowIndex: (index: number) => void;
+  setSelectedRowIndex: GameContextProps['setSelectedRowIndex'];
 };
 
 export const KeyboardContext = createContext({} as KeyboardContextProps);

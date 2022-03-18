@@ -21,12 +21,15 @@ export const Meaning: React.FC<MeaningProps> = ({ word }) => {
     setLoading(true);
 
     try {
-      const res = await fetch(`https://significado.herokuapp.com/${word}`);
-      const resData = await res.json();
-      if (resData.error) throw new Error(resData.error);
+      const meaningsRes = await fetch(`https://significado.herokuapp.com/${word}`);
+      const meaningsData = await meaningsRes.json();
+      if (meaningsData.error) throw new Error(meaningsData.error);
 
-      setMeanings(resData.map((item: any) => item.meanings || []).flat());
-    } catch (err) {
+      const nextMeanings = meaningsData.map((item: any) => item.meanings || []).flat();
+
+      if (!nextMeanings.length) throw new Error('No data');
+      setMeanings(nextMeanings);
+    } catch {
       setError(true);
     }
 
@@ -35,6 +38,7 @@ export const Meaning: React.FC<MeaningProps> = ({ word }) => {
 
   useEffect(() => {
     setMeanings([]);
+    setError(false);
   }, [word]);
 
   return (
@@ -50,7 +54,7 @@ export const Meaning: React.FC<MeaningProps> = ({ word }) => {
       {(error || loading) && (
         <Fallback
           error={!loading && error}
-          css={{ paddingBottom: '4.5rem' }}
+          css={{ paddingBottom: '2.5em' }}
           errorMessage={'Palavra não encontrada'}
         />
       )}

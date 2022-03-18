@@ -77,7 +77,7 @@ const FilesSection: React.FC = () => {
           variant="notion"
           target="_blank"
           data-gtm="Roadmap"
-          href="https://www.notion.so/vini6/Imbr-glio-97d3647c55874152b2e506046a877d2d"
+          href="https://vini6.notion.site/97d3647c55874152b2e506046a877d2d"
         >
           <SiNotion />
           Roadmap

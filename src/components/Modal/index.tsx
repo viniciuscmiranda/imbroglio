@@ -91,7 +91,9 @@ export const Modal: React.FC<ModalProps> = ({
 
           <Scrollbars
             autoHide
-            style={{ height: '36.5rem' }}
+            style={{ height: '37.5rem' }}
+            renderTrackHorizontal={() => <div style={{ display: 'none' }} />}
+            renderThumbHorizontal={() => <div style={{ display: 'none' }} />}
             renderView={(props) => (
               <div {...props} style={{ ...props.style, overflowX: 'hidden' }} />
             )}

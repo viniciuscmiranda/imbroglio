@@ -24,12 +24,11 @@ export type GameContextProps = {
   lastSolution: DataContextProps['lastSolution'];
   puzzleId: Puzzle['id'];
   points: number;
-
-  setRows: (rows: Row[]) => void;
-  setLetters: (letters: Letter[]) => void;
-
-  setSelectedRowIndex: (index: number) => void;
+  setRows: React.Dispatch<React.SetStateAction<Row[]>>;
+  setLetters: React.Dispatch<React.SetStateAction<Letter[]>>;
+  setSelectedRowIndex: React.Dispatch<React.SetStateAction<number>>;
   selectedRowIndex: number;
+  storedWords: { [key: string]: string[] };
 };
 
 const LOCAL_ROW_KEY = 'ROWS';
@@ -53,6 +52,9 @@ export const GameProvider: React.FC = ({ children }) => {
   >([]);
   const [selectedRowIndex, setSelectedRowIndex] =
     useState<GameContextProps['selectedRowIndex']>(-1);
+  const [storedWords, setStoredWords] = useState<GameContextProps['storedWords']>(
+    JSON.parse(localStorage.getItem(LOCAL_WORDS_KEY) || '{}'),
+  );
 
   const [points, setPoints] = useState<GameContextProps['points']>(0);
   const [stats, setStats] = useState<GameContextProps['stats']>(
@@ -286,23 +288,27 @@ export const GameProvider: React.FC = ({ children }) => {
       const nextWords = nextSpecialCharactersRows.map((row) => row.letters.join(''));
 
       const today = moment().format('YYYY-MM-DD');
-      const storedWords = JSON.parse(localStorage.getItem(LOCAL_WORDS_KEY) || '{}');
 
-      nextWords.forEach((word) => {
-        if (!prevWords.includes(word) && !storedWords[today]?.includes(word)) {
-          if (!storedWords[today]) storedWords[today] = [];
-          storedWords[today].push(_.capitalize(word));
+      setStoredWords((prevStoredWords) => {
+        const nextStoredWords = { ...prevStoredWords };
 
-          TagManager.dataLayer({
-            dataLayer: {
-              event: 'word',
-              word: _.capitalize(word),
-            },
-          });
-        }
+        nextWords.forEach((word) => {
+          if (!prevWords.includes(word) && !storedWords[today]?.includes(word)) {
+            if (!storedWords[today]) storedWords[today] = [];
+            storedWords[today].push(_.capitalize(word));
+
+            TagManager.dataLayer({
+              dataLayer: {
+                event: 'word',
+                word: _.capitalize(word),
+              },
+            });
+          }
+        });
+
+        return nextStoredWords;
       });
 
-      localStorage.setItem(LOCAL_WORDS_KEY, JSON.stringify(storedWords));
       return nextSpecialCharactersRows;
     });
 
@@ -333,6 +339,22 @@ export const GameProvider: React.FC = ({ children }) => {
     setPoints(nextPoints);
   }, [rows, correctRows]);
 
+  useEffect(() => {
+    let shouldUpdate = false;
+    const nextStoredWords: any = {};
+
+    Object.entries(storedWords).forEach(([day, words]) => {
+      const nextWords = Array.from(new Set(words));
+      nextStoredWords[day] = nextWords;
+
+      shouldUpdate = nextWords.length !== words.length;
+    });
+
+    localStorage.setItem(LOCAL_WORDS_KEY, JSON.stringify(nextStoredWords));
+
+    if (shouldUpdate) setStoredWords(nextStoredWords);
+  }, [storedWords]);
+
   return (
     <GameContext.Provider
       value={{
@@ -354,6 +376,7 @@ export const GameProvider: React.FC = ({ children }) => {
         setRows,
         setSelectedRowIndex,
         selectedRowIndex,
+        storedWords,
       }}
     >
       {children}
