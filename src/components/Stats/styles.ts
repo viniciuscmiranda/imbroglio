@@ -45,12 +45,21 @@ export const Card = styled('div', {
   alignItems: 'center',
   gap: '$1',
   justifyContent: 'space-between',
+  width: '100%',
+  textAlign: 'left',
 
   variants: {
     hasPage: {
       true: {
+        cursor: 'pointer',
         backgroundColor: '$green',
         borderColor: '$darkGreen',
+
+        transition: 'transform .15s ease',
+
+        '&:hover, &:focus': {
+          transform: 'scale(1.035)',
+        },
       },
     },
   },
@@ -81,23 +90,14 @@ export const IconContainer = styled('div', {
   alignItems: 'center',
 });
 
-export const ActionButton = styled('button', {
+export const ActionButton = styled('div', {
   color: '$white',
-  cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   width: '1.5em',
   height: '1.5em',
-  border: 'none',
-  background: 'none',
   borderRadius: '50%',
-
-  transition: 'transform .15s ease',
-
-  '&:hover, &:focus': {
-    transform: 'scale(1.2)',
-  },
 });
 
 export const TableContainer = styled('div', {

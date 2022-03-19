@@ -53,7 +53,7 @@ export const CloseButton = styled('button', {
 
   transition: 'transform .15s ease',
 
-  '&:hover, &:focus': {
+  '&:hover': {
     transform: 'scale(1.2)',
   },
 });

@@ -153,7 +153,7 @@ export const Stats: React.FC = () => {
             </HeaderMessageTitle>
 
             <p>
-              Um novo {GAME_NAME} começa em <Timer />
+              Seu novo {GAME_NAME} começa em <Timer />
             </p>
           </div>
 
@@ -177,8 +177,34 @@ export const Stats: React.FC = () => {
           {cards.map(({ title, value, page, Icon }) => {
             const hasPage = Boolean(page && value);
 
+            if (hasPage)
+              return (
+                <ModalPage
+                  title={title}
+                  trigger={
+                    <Card key={uniqueId()} as="button" hasPage>
+                      <StatContainer>
+                        <IconContainer>
+                          <Icon size="2em" />
+                        </IconContainer>
+                        <InfoContainer>
+                          <p>{title}</p>
+                          <span>{value || '-'}</span>
+                        </InfoContainer>
+                      </StatContainer>
+
+                      <ActionButton>
+                        <FiChevronRight size="1.25em" />
+                      </ActionButton>
+                    </Card>
+                  }
+                >
+                  {page}
+                </ModalPage>
+              );
+
             return (
-              <Card key={uniqueId()} hasPage={hasPage}>
+              <Card key={uniqueId()}>
                 <StatContainer>
                   <IconContainer>
                     <Icon size="2em" />
@@ -188,19 +214,6 @@ export const Stats: React.FC = () => {
                     <span>{value || '-'}</span>
                   </InfoContainer>
                 </StatContainer>
-
-                {hasPage && (
-                  <ModalPage
-                    title={title}
-                    trigger={
-                      <ActionButton>
-                        <FiChevronRight size="1.25em" />
-                      </ActionButton>
-                    }
-                  >
-                    {page}
-                  </ModalPage>
-                )}
               </Card>
             );
           })}

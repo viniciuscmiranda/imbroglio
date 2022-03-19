@@ -72,6 +72,7 @@ export const Modal: React.FC<ModalProps> = ({
       (triggerRef.current?.childNodes[0] as any)?.focus();
 
       onClose?.();
+      setHideChildrenOverflow(false);
       window.removeEventListener('keydown', onKeyDown);
     }
   }, [open]);
