@@ -18,9 +18,6 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['*'],
-      workbox: {
-        sourcemap: true,
-      },
       manifest: {
         lang: 'pt-BR',
         name: 'imbróglio',

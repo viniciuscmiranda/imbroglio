@@ -46,7 +46,7 @@ export const Meaning: React.FC<MeaningProps> = ({ word }) => {
       title={capitalize(word)}
       onOpen={fetchData}
       trigger={
-        <Button>
+        <Button aria-label={`Mostrar significado de ${word}`}>
           <FiInfo size="1.5rem" />
         </Button>
       }
