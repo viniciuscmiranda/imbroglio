@@ -44,6 +44,7 @@ export const Modal: React.FC<ModalProps> = ({
   const triggerRef = useRef<React.ElementRef<typeof TriggerContainer>>(null);
 
   const [open, setOpen] = useState<boolean | null>(startOpen ? true : null);
+  const [render, setRender] = useState(false);
 
   const [hideChildrenOverflow, setHideChildrenOverflow] = useState(false);
 
@@ -61,14 +62,19 @@ export const Modal: React.FC<ModalProps> = ({
 
     if (open) {
       contentRef.current?.addEventListener(
-        'transitionend',
+        'animationend',
         () => closeButtonRef.current?.focus(),
         { once: true },
       );
 
       onOpen?.();
+      setRender(true);
       window.addEventListener('keydown', onKeyDown);
     } else {
+      contentRef.current?.addEventListener('animationend', () => setRender(false), {
+        once: true,
+      });
+
       (triggerRef.current?.childNodes[0] as any)?.focus();
 
       onClose?.();
@@ -92,39 +98,42 @@ export const Modal: React.FC<ModalProps> = ({
       <TriggerContainer ref={triggerRef} onClick={() => setOpen(!open)}>
         {trigger}
       </TriggerContainer>
+      {render && (
+        <>
+          <Overlay onClick={() => setOpen(false)} open={Boolean(propsOpen || open)} />
 
-      <Overlay onClick={() => setOpen(false)} open={Boolean(propsOpen || open)} />
+          <Container>
+            <Content ref={contentRef} open={Boolean(propsOpen || open)}>
+              <Header>
+                <ModalTitle>{title}</ModalTitle>
 
-      <Container>
-        <Content ref={contentRef} open={Boolean(propsOpen || open)}>
-          <Header>
-            <ModalTitle>{title}</ModalTitle>
+                <Button
+                  ref={closeButtonRef}
+                  variant="ghost"
+                  aria-label="Fechar"
+                  onClick={() => setOpen(false)}
+                >
+                  <FiX size="1.35rem" />
+                </Button>
+              </Header>
 
-            <Button
-              ref={closeButtonRef}
-              variant="ghost"
-              aria-label="Fechar"
-              onClick={() => setOpen(false)}
-            >
-              <FiX size="1.35rem" />
-            </Button>
-          </Header>
-
-          <Scrollbars
-            autoHide
-            style={{ height: '37.5rem' }}
-            renderTrackHorizontal={() => <div style={{ display: 'none' }} />}
-            renderThumbHorizontal={() => <div style={{ display: 'none' }} />}
-            renderView={(props) => (
-              <div {...props} style={{ ...props.style, overflowX: 'hidden' }} />
-            )}
-          >
-            <Children overflowHidden={hideChildrenOverflow} tabIndex={open ? 0 : -1}>
-              {children}
-            </Children>
-          </Scrollbars>
-        </Content>
-      </Container>
+              <Scrollbars
+                autoHide
+                style={{ height: '37.5rem' }}
+                renderTrackHorizontal={() => <div style={{ display: 'none' }} />}
+                renderThumbHorizontal={() => <div style={{ display: 'none' }} />}
+                renderView={(props) => (
+                  <div {...props} style={{ ...props.style, overflowX: 'hidden' }} />
+                )}
+              >
+                <Children overflowHidden={hideChildrenOverflow} tabIndex={open ? 0 : -1}>
+                  {children}
+                </Children>
+              </Scrollbars>
+            </Content>
+          </Container>
+        </>
+      )}
     </ModalContext.Provider>
   );
 };

@@ -1,5 +1,5 @@
 import { Fallback } from 'components/Fallback';
-import { MAX_REQUEST_TRIES } from 'constants';
+import { MAX_REQUEST_RETRIES, REQUEST_TIMEOUT } from 'constants';
 import moment from 'moment';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { Letter, Puzzle, Word } from 'types';
@@ -32,7 +32,7 @@ export const DataProvider: React.FC = ({ children }) => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [requestTry, setRequestTry] = useState(0);
+  const [requestTry, setRequestTry] = useState(1);
 
   const getData = useCallback(async () => {
     setLoading(true);
@@ -48,16 +48,16 @@ export const DataProvider: React.FC = ({ children }) => {
 
       setWords(wordsData);
       setPuzzles(puzzlesData);
+
+      setLoading(false);
     } catch {
-      if (requestTry < MAX_REQUEST_TRIES) {
-        setRequestTry(requestTry + 1);
-        getData();
+      if (requestTry <= MAX_REQUEST_RETRIES) {
+        setRequestTry((prevRequestTry) => prevRequestTry + 1);
       } else {
         setError(true);
+        setLoading(false);
       }
     }
-
-    setLoading(false);
   }, [requestTry]);
 
   const getPuzzle = useCallback(
@@ -96,8 +96,9 @@ export const DataProvider: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (requestTry > 1) setTimeout(() => getData(), REQUEST_TIMEOUT);
+    else getData();
+  }, [requestTry]);
 
   useEffect(() => {
     if (!puzzles.length) return;

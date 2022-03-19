@@ -18,6 +18,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['*'],
+      workbox: {
+        sourcemap: true,
+      },
       manifest: {
         lang: 'pt-BR',
         name: 'imbróglio',
@@ -40,6 +43,12 @@ export default defineConfig({
             src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
+          },
+          {
+            src: 'maskable-icon.png',
+            sizes: '1024x1024',
+            type: 'image/png',
+            purpose: 'maskable',
           },
         ],
       },

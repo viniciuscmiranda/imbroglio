@@ -6,7 +6,6 @@ export const Container = styled('div', {
   backgroundColor: '$background',
   backgroundImage: `url(${bg})`,
   backgroundBlendMode: 'multiply',
-  backgroundSize: '20rem',
   borderRadius: '$1',
 });
 

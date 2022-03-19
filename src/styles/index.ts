@@ -94,7 +94,6 @@ export const global = globalCss({
     color: '$text',
     backgroundImage: `url(${bg})`,
     backgroundBlendMode: 'multiply',
-    backgroundSize: '20rem',
     fontSize: '$normal',
   },
 

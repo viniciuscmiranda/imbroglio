@@ -1,22 +1,42 @@
-import { styled } from 'styles';
+import { keyframes, styled } from 'styles';
 
 export const TriggerContainer = styled('span');
 
-export const Overlay = styled('div', {
-  position: 'fixed',
-  inset: 0,
-  backgroundColor: '$overlay',
+const overlayEnter = keyframes({
+  from: {
+    opacity: 0,
+  },
 
-  opacity: 0,
-  pointerEvents: 'none',
-  transition: 'opacity .2s ease',
+  to: {
+    opacity: 1,
+  },
+});
+
+const overlayExit = keyframes({
+  from: {
+    opacity: 1,
+  },
+
+  to: {
+    opacity: 0,
+  },
+});
+
+export const Overlay = styled('div', {
+  inset: 0,
+  position: 'fixed',
+  backgroundColor: '$overlay',
   zIndex: '$modal',
 
   variants: {
     open: {
       true: {
-        opacity: 1,
-        pointerEvents: 'all',
+        animation: `${overlayEnter} .2s ease`,
+      },
+
+      false: {
+        animation: `${overlayExit} .2s ease`,
+        opacity: 0,
       },
     },
   },
@@ -32,6 +52,30 @@ export const Container = styled('div', {
   zIndex: '$modal',
 });
 
+const contentEnter = keyframes({
+  from: {
+    opacity: 0,
+    transform: 'translateY(30%) scale(.4)',
+  },
+
+  to: {
+    opacity: 1,
+    transform: 'translateY(0) scale(1)',
+  },
+});
+
+const contentExit = keyframes({
+  from: {
+    opacity: 1,
+    transform: 'translateY(0) scale(1)',
+  },
+
+  to: {
+    opacity: 0,
+    transform: 'translateY(30%) scale(.4)',
+  },
+});
+
 export const Content = styled('div', {
   '--header-height': '5rem',
 
@@ -41,11 +85,10 @@ export const Content = styled('div', {
   borderRadius: '$1',
   border: '.2rem solid $text',
 
-  pointerEvents: 'none',
-  opacity: 0,
-  transition: 'all .3s ease',
-  transform: 'translateY(30%) scale(.4)',
-  visibility: 'hidden',
+  opacity: 1,
+  visibility: 'visible',
+  pointerEvents: 'all',
+  transform: 'translateY(0) scale(1)',
 
   '@media (max-width: 800px)': {
     width: 'calc(100% - 3rem)',
@@ -55,10 +98,13 @@ export const Content = styled('div', {
   variants: {
     open: {
       true: {
-        opacity: 1,
-        visibility: 'visible',
-        pointerEvents: 'all',
-        transform: 'translateY(0) scale(1)',
+        animation: `${contentEnter} .3s ease`,
+      },
+
+      false: {
+        opacity: 0,
+        animation: `${contentExit} .3s ease`,
+        transform: 'translateY(30%) scale(.4)',
       },
     },
   },
