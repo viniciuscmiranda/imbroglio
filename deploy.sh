@@ -16,4 +16,4 @@ git commit -m 'deploy'
 git push -f git@github.com:viniciuscmiranda/imbroglio.git main:gh-pages
 
 cd -
-rm -rf dist
+rm -rf dist/.git
