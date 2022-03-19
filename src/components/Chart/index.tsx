@@ -17,7 +17,7 @@ export const Chart: React.FC<ChartProps> = ({ data }) => {
     <Container>
       <Scrollbars
         autoHide
-        style={{ height: '15em' }}
+        style={{ height: '17.5em' }}
         renderTrackVertical={() => <div style={{ display: 'none' }} />}
         renderThumbVertical={() => <div style={{ display: 'none' }} />}
         renderView={(props) => (
