@@ -82,4 +82,13 @@ export const Children = styled('div', {
   padding: '$1',
   paddingBottom: '$2',
   overflowX: 'hidden',
+
+  variants: {
+    overflowHidden: {
+      true: {
+        height: '100%',
+        overflow: 'hidden',
+      },
+    },
+  },
 });

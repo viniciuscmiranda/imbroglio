@@ -13,9 +13,9 @@ import {
   FiShare2,
   FiShuffle,
 } from 'react-icons/fi';
-import { Button } from 'styles/components';
+import { Button, ShareButton } from 'styles/components';
 
-import { Container, Points } from './styles';
+import { Container } from './styles';
 
 const iconSize = '1.35rem';
 
@@ -55,10 +55,14 @@ export const Actions: React.FC = () => {
           <Stats />
         </Modal>
 
-        <Points data-gtm="Compartilhar" aria-label="Compartilhar" onClick={() => share()}>
+        <ShareButton
+          data-gtm="Compartilhar"
+          aria-label="Compartilhar"
+          onClick={() => share()}
+        >
           <FiShare2 size={iconSize} />
           {points} pontos
-        </Points>
+        </ShareButton>
       </div>
 
       <div>

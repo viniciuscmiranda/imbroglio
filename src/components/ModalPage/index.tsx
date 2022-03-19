@@ -1,3 +1,4 @@
+import { useModal } from 'components/Modal';
 import React, { useEffect, useRef, useState } from 'react';
 import { FiChevronLeft } from 'react-icons/fi';
 
@@ -33,9 +34,7 @@ export const ModalPage: React.FC<ModalPageProps> = ({
 
   const [open, setOpen] = useState<boolean | null>(startOpen ? true : null);
 
-  function onKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Escape') setOpen(false);
-  }
+  const { setHideChildrenOverflow } = useModal();
 
   useEffect(() => {
     if (propsOpen === undefined) return;
@@ -48,17 +47,18 @@ export const ModalPage: React.FC<ModalPageProps> = ({
     if (open) {
       containerRef.current?.addEventListener(
         'transitionend',
-        () => closeButtonRef.current?.focus(),
+        () => {
+          closeButtonRef.current?.focus();
+          setHideChildrenOverflow(true);
+        },
         { once: true },
       );
 
       onOpen?.();
-      window.addEventListener('keydown', onKeyDown);
     } else {
       (triggerRef.current?.childNodes[0] as any)?.focus();
-
+      setHideChildrenOverflow(false);
       onClose?.();
-      window.removeEventListener('keydown', onKeyDown);
     }
   }, [open]);
 

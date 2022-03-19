@@ -15,7 +15,15 @@ export const Chart: React.FC<ChartProps> = ({ data }) => {
 
   return (
     <Container>
-      <Scrollbars autoHide autoHeight>
+      <Scrollbars
+        autoHide
+        style={{ height: '15em' }}
+        renderTrackVertical={() => <div style={{ display: 'none' }} />}
+        renderThumbVertical={() => <div style={{ display: 'none' }} />}
+        renderView={(props) => (
+          <div {...props} style={{ ...props.style, overflowY: 'hidden' }} />
+        )}
+      >
         <ChartContainer>
           {data.map(({ value, label }) => (
             <BarContainer key={uniqueId()}>

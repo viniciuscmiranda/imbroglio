@@ -10,7 +10,7 @@ export const Container = styled('div', {
   inset: 0,
   gap: '$0',
   padding: '$0',
-  transform: 'translateY(1rem)',
+  transform: 'translateY(.25em)',
   zIndex: '$toast',
 });
 

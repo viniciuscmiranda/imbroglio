@@ -1,5 +1,6 @@
 import { Chart } from 'components/Chart';
 import { ModalPage } from 'components/ModalPage';
+import { GAME_NAME } from 'constants';
 import { useGame } from 'hooks';
 import { uniqueId } from 'lodash';
 import moment from 'moment';
@@ -13,9 +14,10 @@ import {
   FiDivideCircle,
   FiMaximize2,
   FiPlusCircle,
+  FiShare2,
   FiStar,
 } from 'react-icons/fi';
-import { SectionTitle } from 'styles/components';
+import { SectionTitle, ShareButton } from 'styles/components';
 import { Stats as StatsType } from 'types';
 
 import {
@@ -23,6 +25,8 @@ import {
   Card,
   CardsContainer,
   Container,
+  Header,
+  HeaderMessageTitle,
   IconContainer,
   InfoContainer,
   StatContainer,
@@ -42,6 +46,7 @@ type StatDataType = {
   allPoints: number[];
   allWords: string[];
   groupedWords: { [key: string]: number };
+  todayStats?: StatsType;
 };
 
 type CardType = {
@@ -52,7 +57,7 @@ type CardType = {
 };
 
 export const Stats: React.FC = () => {
-  const { stats, storedWords } = useGame();
+  const { stats, storedWords, share } = useGame();
 
   const [data, setData] = useState<StatDataType | null>(null);
   const [cards, setCards] = useState<CardType[]>([]);
@@ -82,6 +87,7 @@ export const Stats: React.FC = () => {
       stats: stats.sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
       ),
+      todayStats: stats.find(({ date }) => moment(date).isSame(moment(), 'day')),
       totalPoints,
       allWords,
       allPoints,
@@ -140,6 +146,33 @@ export const Stats: React.FC = () => {
   return (
     <>
       <Container>
+        <Header>
+          <div>
+            <HeaderMessageTitle>
+              {data?.todayStats ? 'Você venceu!' : 'Já descobriu as palavras de hoje?'}
+            </HeaderMessageTitle>
+
+            <p>
+              Um novo {GAME_NAME} começa em <Timer />
+            </p>
+          </div>
+
+          <div>
+            <ShareButton
+              onClick={() => share()}
+              css={{
+                background: 'none',
+                border: 'none',
+                padding: '0',
+                height: 'auto',
+              }}
+            >
+              <FiShare2 />
+              Compartilhar
+            </ShareButton>
+          </div>
+        </Header>
+
         <CardsContainer>
           {cards.map(({ title, value, page, Icon }) => {
             const hasPage = Boolean(page);
@@ -152,7 +185,7 @@ export const Stats: React.FC = () => {
                   </IconContainer>
                   <InfoContainer>
                     <p>{title}</p>
-                    <span>{value}</span>
+                    <span>{value || '-'}</span>
                   </InfoContainer>
                 </StatContainer>
 
@@ -190,7 +223,7 @@ export const Stats: React.FC = () => {
 const VictoryPage: React.FC<StatDataType> = ({ stats }) => {
   return (
     <TableContainer>
-      <Scrollbars autoHide style={{ height: '32rem' }}>
+      <Scrollbars autoHide style={{ height: '100%' }}>
         <table>
           <thead>
             <tr>
@@ -203,7 +236,7 @@ const VictoryPage: React.FC<StatDataType> = ({ stats }) => {
             {stats.map((stat) => (
               <tr key={uniqueId()}>
                 <td>
-                  <strong>{moment(stat.date).format('DD/MM/YYYY')}</strong>
+                  <strong>{moment(stat.date).format('DD/MM/YY')}</strong>
                 </td>
                 <td>{stat.points}</td>
                 <td>{stat.words.join(', ')}</td>
@@ -219,7 +252,7 @@ const VictoryPage: React.FC<StatDataType> = ({ stats }) => {
 const WordsPage: React.FC<StatDataType> = ({ groupedWords }) => {
   return (
     <TableContainer>
-      <Scrollbars autoHide style={{ height: '32rem' }}>
+      <Scrollbars autoHide style={{ height: '100%' }}>
         <table>
           <thead>
             <tr>
@@ -241,4 +274,24 @@ const WordsPage: React.FC<StatDataType> = ({ groupedWords }) => {
       </Scrollbars>
     </TableContainer>
   );
+};
+
+const Timer: React.FC = () => {
+  const [timer, setTimer] = useState<moment.Moment | null>(null);
+
+  useEffect(() => {
+    const nextPuzzleTime = moment().add(1, 'day').set({
+      hour: 0,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+    });
+
+    const timeDiff = moment(nextPuzzleTime).diff(moment());
+    const nextTimer = moment.utc(timeDiff);
+
+    setTimeout(() => setTimer(nextTimer), 500);
+  }, [timer]);
+
+  return <strong>{timer?.format('HH:mm:ss')}</strong>;
 };

@@ -14,8 +14,8 @@ export const ChartContainer = styled('div', {
   display: 'flex',
   gap: '$0',
   padding: '$1',
-  paddingRight: '2rem',
-  height: '11.5em',
+  height: '100%',
+  overflow: 'hidden',
 });
 
 export const BarContainer = styled('div', {

@@ -3,14 +3,37 @@ import { styled } from 'styles';
 export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  gap: '$2',
+});
+
+export const Header = styled('div', {
+  marginBottom: '$1',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '$1',
+  backgroundColor: '$green',
+  border: '.2rem solid $darkGreen',
+  color: '$white',
+  borderRadius: '$1',
+  gap: '$1',
+
+  '@media (max-width: 800px)': {
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+  },
+});
+
+export const HeaderMessageTitle = styled('span', {
+  fontWeight: 'bold',
+  fontSize: '1.25em',
 });
 
 export const CardsContainer = styled('div', {
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(15em, 1fr))',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(17em, 1fr))',
   gap: '$1',
   color: '$blue',
+  marginBottom: '$2',
 });
 
 export const Card = styled('div', {
@@ -59,13 +82,16 @@ export const IconContainer = styled('div', {
 });
 
 export const ActionButton = styled('button', {
-  all: 'unset',
   color: '$white',
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
   width: '1.5em',
   height: '1.5em',
+  border: 'none',
+  background: 'none',
+  borderRadius: '50%',
 
   transition: 'transform .15s ease',
 
@@ -80,6 +106,7 @@ export const TableContainer = styled('div', {
   border: '.2rem solid $darkGreen',
   backgroundColor: '$green',
   color: '$white',
+  height: '100%',
 
   '& table': {
     borderCollapse: 'collapse',

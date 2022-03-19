@@ -59,3 +59,11 @@ export const Button = styled('button', {
     },
   },
 });
+
+export const ShareButton = styled(Button, {
+  fontWeight: 'bold',
+  width: 'auto',
+  gap: '$0',
+  fontSize: '1.15rem',
+  padding: '0 1rem',
+});
