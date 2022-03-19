@@ -1,10 +1,9 @@
-import bg from 'assets/images/bg.png';
 import { styled } from 'styles';
 
 export const Container = styled('div', {
   border: '.2em solid $darkOrange',
   backgroundColor: '$background',
-  backgroundImage: `url(${bg})`,
+  backgroundImage: `url("/images/bg.png")`,
   backgroundBlendMode: 'multiply',
   borderRadius: '$1',
 });

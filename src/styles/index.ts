@@ -1,5 +1,4 @@
 import { createStitches } from '@stitches/react';
-import bg from 'assets/images/bg.png';
 import { LETTERS_PER_ROW } from 'constants';
 
 // configurações de estilo (css)
@@ -92,7 +91,7 @@ export const global = globalCss({
   body: {
     backgroundColor: '$background',
     color: '$text',
-    backgroundImage: `url(${bg})`,
+    backgroundImage: `url("/images/bg.png")`,
     backgroundBlendMode: 'multiply',
     fontSize: '$normal',
   },

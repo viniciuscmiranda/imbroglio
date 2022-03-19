@@ -11,7 +11,7 @@ import { useRegisterSW } from 'virtual:pwa-register/react';
 export const App: React.FC = () => {
   // initialize pwa
   useRegisterSW({
-    onRegistered: (r) => r && setInterval(() => r.update(), 60 * 60 * 1000),
+    onRegistered: (r) => r && setInterval(() => r.update(), 60 * 60 * 2000),
   });
 
   // force https

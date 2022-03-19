@@ -1,4 +1,3 @@
-import Logo from 'assets/images/logo.svg';
 import { GAME_NAME } from 'constants';
 import { useGame } from 'hooks';
 import React from 'react';
@@ -10,7 +9,7 @@ export const Title: React.FC = () => {
 
   return (
     <Container data-gtm="Logo">
-      <img src={Logo} alt="" />
+      <img src="/images/logo.svg" alt="" />
       <GameTitle>
         {GAME_NAME}
         <span>#{puzzleId}</span>
