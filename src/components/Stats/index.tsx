@@ -257,18 +257,20 @@ const WordsPage: React.FC<StatDataType> = ({ groupedWords }) => {
           <thead>
             <tr>
               <th>Palavra</th>
-              <th>Repetições</th>
+              <th>Vezes</th>
             </tr>
           </thead>
           <tbody>
-            {Object.entries(groupedWords).map(([word, amount]) => (
-              <tr key={uniqueId()}>
-                <td>
-                  <strong>{word}</strong>
-                </td>
-                <td>{amount}</td>
-              </tr>
-            ))}
+            {Object.entries(groupedWords)
+              .sort((a, b) => b[1] - a[1])
+              .map(([word, amount]) => (
+                <tr key={uniqueId()}>
+                  <td>
+                    <strong>{word}</strong>
+                  </td>
+                  <td>{amount}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </Scrollbars>
