@@ -25,10 +25,11 @@ export default defineConfig({
         description: 'Forme palavras e faça o máximo de pontos que puder!',
         theme_color: '#3177ad',
         background_color: '#F2CD5D',
-        start_url: '/',
-        scope: '/',
-        display: 'fullscreen',
+        start_url: '.',
+        scope: '.',
+        display: 'standalone',
         orientation: 'portrait',
+        categories: ['games'],
         icons: [
           {
             src: 'pwa-192x192.png',
