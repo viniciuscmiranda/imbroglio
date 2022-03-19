@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import { Chart } from 'components/Chart';
 import { ModalPage } from 'components/ModalPage';
 import { GAME_NAME } from 'constants';
@@ -237,7 +238,7 @@ const VictoryPage: React.FC<StatDataType> = ({ stats }) => {
   return (
     <TableContainer>
       <Scrollbars autoHide style={{ height: '100%' }}>
-        <table>
+        <table tabIndex={0}>
           <thead>
             <tr>
               <th>Dia</th>
@@ -266,7 +267,7 @@ const WordsPage: React.FC<StatDataType> = ({ groupedWords }) => {
   return (
     <TableContainer>
       <Scrollbars autoHide style={{ height: '100%' }}>
-        <table>
+        <table tabIndex={0}>
           <thead>
             <tr>
               <th>Palavra</th>

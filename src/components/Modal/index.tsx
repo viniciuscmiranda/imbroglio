@@ -126,7 +126,7 @@ export const Modal: React.FC<ModalProps> = ({
                   <div {...props} style={{ ...props.style, overflowX: 'hidden' }} />
                 )}
               >
-                <Children overflowHidden={hideChildrenOverflow} tabIndex={open ? 0 : -1}>
+                <Children overflowHidden={hideChildrenOverflow} tabIndex={0}>
                   {children}
                 </Children>
               </Scrollbars>
