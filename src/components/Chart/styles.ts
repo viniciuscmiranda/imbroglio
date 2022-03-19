@@ -66,3 +66,14 @@ export const Bar = styled('div', {
     },
   },
 });
+
+export const Placeholder = styled('p', {
+  position: 'absolute',
+  inset: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontWeight: 'bold',
+  fontSize: '1.25em',
+  textAlign: 'center',
+});

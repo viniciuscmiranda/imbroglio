@@ -2,7 +2,7 @@ import { uniqueId } from 'lodash';
 import React, { useMemo } from 'react';
 import Scrollbars from 'react-custom-scrollbars-2';
 
-import { Bar, BarContainer, ChartContainer, Container } from './styles';
+import { Bar, BarContainer, ChartContainer, Container, Placeholder } from './styles';
 
 export type ChartProps = {
   data: { label: string; value: number }[];
@@ -25,6 +25,8 @@ export const Chart: React.FC<ChartProps> = ({ data }) => {
         )}
       >
         <ChartContainer>
+          {!data.length && <Placeholder>{'Sem dados'}</Placeholder>}
+
           {data.map(({ value, label }) => (
             <BarContainer key={uniqueId()}>
               <Bar

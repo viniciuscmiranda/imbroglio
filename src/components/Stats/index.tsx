@@ -80,8 +80,8 @@ export const Stats: React.FC = () => {
       playedGames: stats.length,
       totalWords: allWords.length,
       largestWord: allWords.sort((a, b) => b.length - a.length)[0],
-      averagePoints: (totalPoints / stats.length).toFixed(1),
-      recordPoints: Math.max(...allPoints),
+      averagePoints: stats.length ? (totalPoints / stats.length).toFixed(1) : '',
+      recordPoints: allPoints.length ? Math.max(...allPoints) : 0,
       pointsByDay: stats.map(({ points, date }) => ({ points, date })),
       uniqueWords: Object.keys(groupedWords).length,
       stats: stats.sort(
@@ -175,7 +175,7 @@ export const Stats: React.FC = () => {
 
         <CardsContainer>
           {cards.map(({ title, value, page, Icon }) => {
-            const hasPage = Boolean(page);
+            const hasPage = Boolean(page && value);
 
             return (
               <Card key={uniqueId()} hasPage={hasPage}>
