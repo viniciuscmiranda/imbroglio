@@ -55,7 +55,7 @@ export const Meaning: React.FC<MeaningProps> = ({ word }) => {
         <Fallback
           error={!loading && error}
           css={{ paddingBottom: '2.5em' }}
-          errorMessage={'Palavra não encontrada'}
+          errorMessage={'Significado não encontrado'}
         />
       )}
 

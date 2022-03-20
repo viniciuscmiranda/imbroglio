@@ -293,17 +293,17 @@ export const GameProvider: React.FC = ({ children }) => {
         const nextStoredWords = { ...prevStoredWords };
 
         nextWords.forEach((word) => {
-          if (!prevWords.includes(word) && !storedWords[today]?.includes(word)) {
-            if (!storedWords[today]) storedWords[today] = [];
-            storedWords[today].push(_.capitalize(word));
+          if (prevWords.includes(word) || nextStoredWords[today]?.includes(word)) return;
+          if (!nextStoredWords[today]) nextStoredWords[today] = [];
 
-            TagManager.dataLayer({
-              dataLayer: {
-                event: 'word',
-                word: _.capitalize(word),
-              },
-            });
-          }
+          nextStoredWords[today].push(_.capitalize(word));
+
+          TagManager.dataLayer({
+            dataLayer: {
+              event: 'word',
+              word: _.capitalize(word),
+            },
+          });
         });
 
         return nextStoredWords;
