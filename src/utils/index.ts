@@ -17,3 +17,10 @@ export function isMobile() {
 export function deepSet<T>(arr: T[]): T[] {
   return Array.from(new Set(arr.map((i) => JSON.stringify(i)))).map((i) => JSON.parse(i));
 }
+
+export function normalize(value: string) {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}

@@ -340,14 +340,13 @@ export const GameProvider: React.FC = ({ children }) => {
   }, [rows, correctRows]);
 
   useEffect(() => {
-    let shouldUpdate = false;
-    const nextStoredWords: any = {};
+    const nextStoredWords = { ...storedWords };
 
-    Object.entries(storedWords).forEach(([day, words]) => {
+    const shouldUpdate = Object.entries(storedWords).some(([day, words]) => {
       const nextWords = Array.from(new Set(words));
       nextStoredWords[day] = nextWords;
 
-      shouldUpdate = nextWords.length !== words.length;
+      return nextWords.length !== words.length;
     });
 
     localStorage.setItem(LOCAL_WORDS_KEY, JSON.stringify(nextStoredWords));

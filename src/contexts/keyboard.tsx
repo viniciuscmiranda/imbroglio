@@ -2,6 +2,7 @@ import { ROWS_AMOUNT } from 'constants';
 import { useGame } from 'hooks';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { Letter, Row } from 'types';
+import { normalize } from 'utils';
 
 import { GameContextProps } from './game';
 
@@ -71,10 +72,7 @@ export const KeyboardProvider: React.FC = ({ children }) => {
     (key: string) => {
       const { currentRow, currentRowIndex } = getRow();
 
-      key = key
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '');
+      key = normalize(key);
 
       // search in bench
       const nextIndex = currentRow.length;

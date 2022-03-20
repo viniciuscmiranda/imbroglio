@@ -20,6 +20,7 @@ import {
 } from 'react-icons/fi';
 import { SectionTitle, ShareButton } from 'styles/components';
 import { Stats as StatsType } from 'types';
+import { normalize } from 'utils';
 
 import {
   ActionButton,
@@ -66,14 +67,16 @@ export const Stats: React.FC = () => {
   useEffect(() => {
     const allWords = Object.values(storedWords)?.flat();
     const allPoints = stats.map(({ points }) => points);
-    const groupedWords = allWords.sort().reduce((acc, curr) => {
-      const x: { [key: string]: number } = { ...acc };
+    const groupedWords = allWords
+      .sort((a, b) => Number(normalize(b) > normalize(a)) * -1)
+      .reduce((acc, curr) => {
+        const x: { [key: string]: number } = { ...acc };
 
-      if (x[curr]) x[curr] = x[curr] + 1;
-      else x[curr] = 1;
+        if (x[curr]) x[curr] = x[curr] + 1;
+        else x[curr] = 1;
 
-      return x;
-    }, {});
+        return x;
+      }, {});
 
     const totalPoints = allPoints.reduce((acc, curr) => acc + curr, 0);
 
@@ -183,7 +186,12 @@ export const Stats: React.FC = () => {
                 <ModalPage
                   title={title}
                   trigger={
-                    <Card key={uniqueId()} as="button" hasPage>
+                    <Card
+                      data-gtm={`Estatísticas: ${title}`}
+                      key={uniqueId()}
+                      as="button"
+                      hasPage
+                    >
                       <StatContainer>
                         <IconContainer>
                           <Icon size="2em" />
