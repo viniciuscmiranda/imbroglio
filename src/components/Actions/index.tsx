@@ -37,7 +37,12 @@ export const Actions: React.FC = () => {
           <FiShuffle size={iconSize} />
         </Button>
 
-        <Button aria-label="Recomeçar" title="Recomeçar" onClick={() => resetGame()}>
+        <Button
+          data-gtm="Recomeçar"
+          aria-label="Recomeçar"
+          title="Recomeçar"
+          onClick={() => resetGame()}
+        >
           <FiRefreshCw size={iconSize} />
         </Button>
 
