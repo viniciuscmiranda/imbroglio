@@ -10,14 +10,14 @@ export type ChartProps = {
 
 export const Chart: React.FC<ChartProps> = ({ data }) => {
   const higherValue = useMemo(() => {
-    return Math.max(...data.map(({ value }) => value));
+    return Math.max(...data.map(({ value }) => value)) || 0;
   }, [data]);
 
   return (
     <Container>
       <Scrollbars
         autoHide
-        style={{ height: '17.5em' }}
+        style={{ height: '17em' }}
         renderTrackVertical={() => <div style={{ display: 'none' }} />}
         renderThumbVertical={() => <div style={{ display: 'none' }} />}
         renderView={(props) => (

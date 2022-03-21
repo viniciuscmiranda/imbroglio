@@ -229,7 +229,7 @@ export const Stats: React.FC = () => {
         </CardsContainer>
 
         <div>
-          <SectionTitle>📅 Pontos por dia</SectionTitle>
+          <SectionTitle>📅 Histórico de pontos</SectionTitle>
           <Chart
             data={stats.map(({ date, points }) => ({
               label: moment(date).format('DD/MM/YY'),

@@ -13,7 +13,6 @@ export const ChartContainer = styled('div', {
   gap: '$0',
   padding: '$1',
   height: '100%',
-  overflow: 'hidden',
 });
 
 export const BarContainer = styled('div', {
@@ -25,7 +24,7 @@ export const BarContainer = styled('div', {
   alignItems: 'center',
 
   '&:last-of-type': {
-    paddingRight: '.75rem',
+    paddingRight: '2rem',
   },
 
   '> span': {
