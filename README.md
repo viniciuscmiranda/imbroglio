@@ -4,13 +4,13 @@
 
 Segure e arraste as letras da bancada para o quadro
 
-<img src="./src/assets/images/drag.gif" alt="Arrastar letra" width="500"/>
+<img src="./public/images/drag.gif" alt="Arrastar letra" width="500"/>
 
 Forme até 3 palavras usando as letras disponíveis
 
 Quanto maiores as palavras formadas, mais pontos você ganha
 
-<img src="./src/assets/images/word.gif" alt="Formar palavra" width="500"/>
+<img src="./public/images/word.gif" alt="Formar palavra" width="500"/>
 
 Volte todos os dias para um novo desafio
 
@@ -20,8 +20,8 @@ E não se esqueça de compartilhar!
 
 ## 🚀 Criadores
 
-[![Código fonte](https://img.shields.io/badge/Vini-black?style=for-the-badge&logo=github)](https://github.com/viniciuscmiranda)
-[![Base de dados](https://img.shields.io/badge/João%20Lucas-black?style=for-the-badge&logo=github)](https://github.com/joaolucas26)
+[![Código fonte](https://img.shields.io/badge/Vini-1d9bf0?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/_seis66)
+[![Base de dados](https://img.shields.io/badge/João%20Lucas-1d9bf0?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/JaozinBaterista)
 
 <br />
 
