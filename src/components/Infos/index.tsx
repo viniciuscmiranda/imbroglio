@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiGithub, FiTwitter } from 'react-icons/fi';
+import { FiGithub } from 'react-icons/fi';
 import { SiNotion } from 'react-icons/si';
 import { Section, SectionTitle } from 'styles/components';
 
@@ -28,7 +28,7 @@ const SocialSection: React.FC = () => {
             target="_blank"
             href="https://github.com/viniciuscmiranda"
           >
-            <FiTwitter />
+            <FiGithub />
             Vini
           </SocialButton>
 
@@ -38,7 +38,7 @@ const SocialSection: React.FC = () => {
             data-gtm="GitHub João Lucas"
             href="https://github.com/joaolucas26"
           >
-            <FiTwitter />
+            <FiGithub />
             João Lucas
           </SocialButton>
         </SocialContainer>
