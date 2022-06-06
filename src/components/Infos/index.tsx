@@ -23,20 +23,20 @@ const SocialSection: React.FC = () => {
       <Social>
         <SocialContainer>
           <SocialButton
-            variant="twitter"
-            data-gtm="Twitter Vini"
+            variant="github"
+            data-gtm="GitHub Vini"
             target="_blank"
-            href="https://twitter.com/_seis66"
+            href="https://github.com/viniciuscmiranda"
           >
             <FiTwitter />
             Vini
           </SocialButton>
 
           <SocialButton
-            variant="twitter"
+            variant="github"
             target="_blank"
-            data-gtm="Twitter João Lucas"
-            href="https://twitter.com/JaozinBaterista"
+            data-gtm="GitHub João Lucas"
+            href="https://github.com/joaolucas26"
           >
             <FiTwitter />
             João Lucas
