@@ -1,4 +1,4 @@
-<h1 style="color:#3B88C3">🔡 Imbróglio</h1>
+[<h1 style="color:#3B88C3">🔡 Imbróglio</h1>](https://imbrogliogame.com.br/)
 
 ## Como jogar
 
@@ -20,8 +20,8 @@ E não se esqueça de compartilhar!
 
 ## 🚀 Criadores
 
-[![Código fonte](https://img.shields.io/badge/Vini-1d9bf0?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/_seis66)
-[![Base de dados](https://img.shields.io/badge/João%20Lucas-1d9bf0?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/JaozinBaterista)
+[![Código fonte](https://img.shields.io/badge/Vini-black?style=for-the-badge&logo=github&logoColor=white)](https://github.com/viniciuscmiranda)
+[![Base de dados](https://img.shields.io/badge/João%20Lucas-black?style=for-the-badge&logo=github&logoColor=white)](https://github.com/joaolucas26)
 
 <br />
 
