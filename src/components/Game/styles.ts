@@ -98,8 +98,8 @@ export const BenchRow = styled('div', {
     height: '$letterSize',
   },
 
-  '&:last-child': {
-     height: '100%',
+  '&:nth-last-child(2)': {
+    height: '100%',
   },
 
   variants: {
