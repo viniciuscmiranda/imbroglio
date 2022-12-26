@@ -79,6 +79,8 @@ export const Letter = styled('span', {
 });
 
 export const Bench = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
   position: 'relative',
   width: `calc(${BENCH_ROW_LENGTH} * $letterSize + ($letterSpacing * ${
     BENCH_ROW_LENGTH + 6
@@ -94,6 +96,10 @@ export const BenchRow = styled('div', {
 
   '&:first-child': {
     height: '$letterSize',
+  },
+
+  '&:last-child': {
+     height: '100%',
   },
 
   variants: {
