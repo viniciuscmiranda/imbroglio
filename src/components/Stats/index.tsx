@@ -65,7 +65,9 @@ export const Stats: React.FC = () => {
   const [cards, setCards] = useState<CardType[]>([]);
 
   useEffect(() => {
-    const allWords = Object.values(storedWords)?.flat();
+    const allWords = Object.values(storedWords)
+      ?.flat()
+      .filter((word) => normalize(word).length > 1);
     const allPoints = stats.map(({ points }) => points);
     const groupedWords = allWords
       .sort((a, b) => Number(normalize(b) > normalize(a)) * -1)
@@ -286,6 +288,7 @@ const WordsPage: React.FC<StatDataType> = ({ groupedWords }) => {
           <tbody>
             {Object.entries(groupedWords)
               .sort((a, b) => b[1] - a[1])
+              .filter((word) => normalize(String(word)).length > 1)
               .map(([word, amount]) => (
                 <tr key={uniqueId()}>
                   <td>
