@@ -11,7 +11,7 @@ export default defineConfig({
     createHtmlPlugin({
       inject: {
         data: {
-          APP_URL: 'https://imbrogliogame.com.br',
+          APP_URL: 'https://imbroglio.com.br',
         },
       },
     }),

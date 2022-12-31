@@ -1,4 +1,4 @@
-[<h1 style="color:#3B88C3">🔡 Imbróglio</h1>](https://imbrogliogame.com.br/)
+[<h1 style="color:#3B88C3">🔡 Imbróglio</h1>](https://imbroglio.com.br/)
 
 ## Como jogar
 
