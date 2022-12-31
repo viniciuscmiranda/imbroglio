@@ -21,11 +21,41 @@ export const Meaning: React.FC<MeaningProps> = ({ word }) => {
     setLoading(true);
 
     try {
-      const meaningsRes = await fetch(`https://significado.herokuapp.com/${word}`);
-      const meaningsData = await meaningsRes.json();
-      if (meaningsData.error) throw new Error(meaningsData.error);
+      const data = await fetch(`https://api.dicionario-aberto.net/word/${word}`).then(
+        (res) => res.json(),
+      );
 
-      const nextMeanings = meaningsData.map((item: any) => item.meanings || []).flat();
+      const nextMeanings = data
+        .flatMap(({ xml }: any) => {
+          const temp = document.createElement('div');
+          temp.innerHTML = xml;
+
+          return (temp.textContent || temp.innerText).split('\n');
+        })
+        .filter((string: string) => {
+          const meaning = string.trim();
+
+          return (
+            meaning &&
+            meaning.toLowerCase() !== word.toLowerCase() &&
+            !meaning.match('Lat.') &&
+            !meaning.startsWith('Fig') &&
+            !meaning.startsWith('(') &&
+            !meaning.match(/[v|V]\./) &&
+            !meaning.match(/^[a-zA-Z]{1,4}\./) &&
+            meaning.length > 2
+          );
+        })
+        .map((meaning: string) => {
+          const formatted = meaning
+            .trim()
+            .replaceAll('_', '"')
+            .replaceAll('«', '')
+            .replaceAll('»', '')
+            .replace(/\.$/, ';');
+
+          return formatted[0].toUpperCase() + formatted.substring(1);
+        });
 
       if (!nextMeanings.length) throw new Error('No data');
       setMeanings(nextMeanings);
@@ -73,8 +103,8 @@ export const Meaning: React.FC<MeaningProps> = ({ word }) => {
           <p style={{ marginTop: '2rem' }}>
             Fornecido por:
             <br />
-            <a href="https://github.com/ThiagoNelsi/dicio-api" target="blank">
-              https://github.com/ThiagoNelsi/dicio-api
+            <a href="https://api.dicionario-aberto.net/" target="blank">
+              https://api.dicionario-aberto.net/
             </a>
           </p>
         </>
