@@ -10,3 +10,4 @@ export const APP_URL = window.location.href;
 export const TOAST_TIMEOUT = 3000;
 export const MAX_TOASTS = 3;
 export const STATS_SEARCH_PARAM_KEY = 'stats';
+export const WORDS_SEARCH_PARAM_KEY = 'words';

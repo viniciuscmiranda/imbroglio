@@ -1,7 +1,7 @@
 import { Game } from 'components/Game';
-import { STATS_SEARCH_PARAM_KEY } from 'constants';
+import { STATS_SEARCH_PARAM_KEY, WORDS_SEARCH_PARAM_KEY } from 'constants';
 import { DataProvider } from 'contexts/data';
-import { GameProvider, LOCAL_STATS_KEY } from 'contexts/game';
+import { GameProvider, LOCAL_STATS_KEY, LOCAL_WORDS_KEY } from 'contexts/game';
 import { KeyboardProvider } from 'contexts/keyboard';
 import { ToastProvider } from 'contexts/toast';
 import React, { useLayoutEffect } from 'react';
@@ -17,11 +17,27 @@ export const App: React.FC = () => {
       const search = new URLSearchParams(window.location.search);
 
       const statsJSON = search.get(STATS_SEARCH_PARAM_KEY);
-      if (!statsJSON) return;
-      const stats: Stats[] = JSON.parse(statsJSON) || [];
+      const wordsJSON = search.get(WORDS_SEARCH_PARAM_KEY);
+      if (!statsJSON && !wordsJSON) return;
+      const stats: Stats[] = JSON.parse(statsJSON || '[]');
+      const words: Record<string, string[]> = JSON.parse(wordsJSON || '{}');
 
       const localStatsJSON = localStorage.getItem(LOCAL_STATS_KEY) || '[]';
-      const localStats: Stats[] = JSON.parse(localStatsJSON) || [];
+      const localStats: Stats[] = JSON.parse(localStatsJSON);
+      const localWordsJSON = localStorage.getItem(LOCAL_WORDS_KEY) || '{}';
+      const localWords: Record<string, string[]> = JSON.parse(localWordsJSON);
+
+      const nextWords = [...Object.keys(words), ...Object.keys(localWords)].reduce(
+        (acc: Record<string, string[]>, dateKey) => {
+          const dateLocalWords = localWords[dateKey] || [];
+          const dateWords = words[dateKey] || [];
+
+          const w = [...dateLocalWords, ...dateWords];
+          if (w.length) acc[dateKey] = w;
+          return acc;
+        },
+        {},
+      );
 
       const nextStats = stats
         .map((stat) => {
@@ -38,7 +54,10 @@ export const App: React.FC = () => {
         JSON.stringify([...nextStats, ...localStats]),
       );
 
+      localStorage.setItem(LOCAL_WORDS_KEY, JSON.stringify(nextWords));
+
       search.delete(STATS_SEARCH_PARAM_KEY);
+      search.delete(WORDS_SEARCH_PARAM_KEY);
       window.location.search = search.toString();
     } catch {
       //
