@@ -184,6 +184,7 @@ export const Stats: React.FC = () => {
             if (hasPage)
               return (
                 <ModalPage
+                  key={uniqueId()}
                   title={title}
                   trigger={
                     <Card

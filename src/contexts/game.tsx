@@ -32,7 +32,7 @@ export type GameContextProps = {
 };
 
 const LOCAL_ROW_KEY = 'ROWS';
-const LOCAL_STATS_KEY = 'STATS';
+export const LOCAL_STATS_KEY = 'STATS';
 const LOCAL_WORDS_KEY = 'WORDS';
 
 export const GameContext = createContext({} as GameContextProps);
