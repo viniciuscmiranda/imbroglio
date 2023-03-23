@@ -69,20 +69,21 @@ export const DataProvider: React.FC = ({ children }) => {
         nextPuzzle = puzzles.find((p, pIndex) => {
           const puzzleDate = moment(p.date);
           const isSameDay = puzzleDate.format('DD') === moment().format('DD');
-          const isSameMonth = puzzleData.format('MM') === moment().format('MM');
-          
-          if (isSameDay && isSameMonth)) {
+          const isSameMonth = puzzleDate.format('MM') === moment().format('MM');
+
+          if (isSameDay && isSameMonth) {
             nextLastSolution = puzzles[pIndex - 1]?.solution || null;
             return true;
           }
 
           return false;
         });
-        
-        
-        const id = nextPuzzle.id;
-        const daysDiff = moment().diff(moment(nextPuzzle.date), 'days')
-        nextPuzle.id = id + daysDiff
+
+        if (nextPuzzle) {
+          const id = nextPuzzle.id;
+          const daysDiff = moment().diff(moment(nextPuzzle.date), 'days');
+          nextPuzzle.id = id + daysDiff;
+        }
       }
 
       if (random || !nextPuzzle) {
