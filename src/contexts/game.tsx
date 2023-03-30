@@ -180,7 +180,7 @@ export const GameProvider: React.FC = ({ children }) => {
     if (showVictory) {
       const statsData: Stats = {
         puzzleId: puzzle.id,
-        date: puzzle.date,
+        date: moment().format('YYYY-MM-DD'),
         points: points,
         words: specialCharactersRows.map((row) => {
           const word = row.letters.join('');
